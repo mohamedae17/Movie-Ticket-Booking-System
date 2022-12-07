@@ -48,10 +48,10 @@ namespace Movie_Ticket_Booking_System.Models
 
     public class LoginViewModel
     {
+
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
-        public string Email { get; set; }
+        [Display(Name = "Username")]
+        public string username { get; set; }
 
         [Required]
         [DataType(DataType.Password)]
@@ -64,6 +64,9 @@ namespace Movie_Ticket_Booking_System.Models
 
     public class RegisterViewModel
     {
+        [Required]
+        [Display(Name = "Username")]
+        public string username { get; set; }
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
