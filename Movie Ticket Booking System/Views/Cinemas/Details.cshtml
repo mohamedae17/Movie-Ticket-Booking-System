@@ -1,0 +1,35 @@
+﻿@model Movie_Ticket_Booking_System.Models.Cinema
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Cinema</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CinemaName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CinemaName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CinemaCity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CinemaCity)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

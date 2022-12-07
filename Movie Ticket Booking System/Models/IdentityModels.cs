@@ -29,5 +29,9 @@ namespace Movie_Ticket_Booking_System.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<Movie_Ticket_Booking_System.Models.Cinema> Cinemas { get; set; }
+
+        public System.Data.Entity.DbSet<Movie_Ticket_Booking_System.Models.MovieDetails> MovieDetails { get; set; }
     }
 }
