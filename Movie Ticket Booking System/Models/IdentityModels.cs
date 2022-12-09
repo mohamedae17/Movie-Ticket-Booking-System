@@ -33,5 +33,11 @@ namespace Movie_Ticket_Booking_System.Models
         public System.Data.Entity.DbSet<Movie_Ticket_Booking_System.Models.Cinema> Cinemas { get; set; }
 
         public System.Data.Entity.DbSet<Movie_Ticket_Booking_System.Models.MovieDetails> MovieDetails { get; set; }
+
+        public System.Data.Entity.DbSet<Movie_Ticket_Booking_System.Models.Halls> Halls { get; set; }
+
+        public System.Data.Entity.DbSet<Movie_Ticket_Booking_System.Models.Show> Shows { get; set; }
+
+        public System.Data.Entity.DbSet<Movie_Ticket_Booking_System.Models.Booking> Bookings { get; set; }
     }
 }

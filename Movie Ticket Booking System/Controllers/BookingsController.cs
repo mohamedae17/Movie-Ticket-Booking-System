@@ -10,107 +10,107 @@ using Movie_Ticket_Booking_System.Models;
 
 namespace Movie_Ticket_Booking_System.Controllers
 {
-    public class CinemasController : Controller
+    public class BookingsController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
-        // GET: Cinemas
+        // GET: Bookings
         public ActionResult Index()
         {
-            return View(db.Cinemas.ToList());
+            return View(db.Bookings.ToList());
         }
 
-        // GET: Cinemas/Details/5
+        // GET: Bookings/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cinema cinema = db.Cinemas.Find(id);
-            if (cinema == null)
+            Booking booking = db.Bookings.Find(id);
+            if (booking == null)
             {
                 return HttpNotFound();
             }
-            return View(cinema);
+            return View(booking);
         }
 
-        // GET: Cinemas/Create
+        // GET: Bookings/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Cinemas/Create
+        // POST: Bookings/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,CinemaName,CinemaCity")] Cinema cinema)
+        public ActionResult Create([Bind(Include = "numberOfSeats,BookingNumber,createdOn,BookingStatus")] Booking booking)
         {
             if (ModelState.IsValid)
             {
-                db.Cinemas.Add(cinema);
+                db.Bookings.Add(booking);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(cinema);
+            return View(booking);
         }
 
-        // GET: Cinemas/Edit/5
+        // GET: Bookings/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cinema cinema = db.Cinemas.Find(id);
-            if (cinema == null)
+            Booking booking = db.Bookings.Find(id);
+            if (booking == null)
             {
                 return HttpNotFound();
             }
-            return View(cinema);
+            return View(booking);
         }
 
-        // POST: Cinemas/Edit/5
+        // POST: Bookings/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,CinemaName,CinemaCity")] Cinema cinema)
+        public ActionResult Edit([Bind(Include = "numberOfSeats,BookingNumber,createdOn,BookingStatus")] Booking booking)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(cinema).State = EntityState.Modified;
+                db.Entry(booking).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(cinema);
+            return View(booking);
         }
 
-        // GET: Cinemas/Delete/5
+        // GET: Bookings/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cinema cinema = db.Cinemas.Find(id);
-            if (cinema == null)
+            Booking booking = db.Bookings.Find(id);
+            if (booking == null)
             {
                 return HttpNotFound();
             }
-            return View(cinema);
+            return View(booking);
         }
 
-        // POST: Cinemas/Delete/5
+        // POST: Bookings/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
-            Cinema cinema = db.Cinemas.Find(id);
-            db.Cinemas.Remove(cinema);
+            Booking booking = db.Bookings.Find(id);
+            db.Bookings.Remove(booking);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

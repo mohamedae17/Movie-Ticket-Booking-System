@@ -168,39 +168,29 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\CinemasController.cs" />
+    <Compile Include="Controllers\BookingsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\MovieDetailsController.cs" />
+    <Compile Include="Controllers\ShowsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202212070846034_Initialdata.cs" />
-    <Compile Include="Migrations\202212070846034_Initialdata.Designer.cs">
-      <DependentUpon>202212070846034_Initialdata.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202212071618196_cinemaAndMovieTable.cs" />
-    <Compile Include="Migrations\202212071618196_cinemaAndMovieTable.Designer.cs">
-      <DependentUpon>202212071618196_cinemaAndMovieTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202212071630121_AddMovieTable.cs" />
-    <Compile Include="Migrations\202212071630121_AddMovieTable.Designer.cs">
-      <DependentUpon>202212071630121_AddMovieTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202212071646392_solve.cs" />
-    <Compile Include="Migrations\202212071646392_solve.Designer.cs">
-      <DependentUpon>202212071646392_solve.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202212071652407_solve2AndLanguages.cs" />
-    <Compile Include="Migrations\202212071652407_solve2AndLanguages.Designer.cs">
-      <DependentUpon>202212071652407_solve2AndLanguages.cs</DependentUpon>
+    <Compile Include="Migrations\202212081548538_Initial.cs" />
+    <Compile Include="Migrations\202212081548538_Initial.Designer.cs">
+      <DependentUpon>202212081548538_Initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Booking.cs" />
     <Compile Include="Models\Cinema.cs" />
+    <Compile Include="Models\CinemaHallSeat.cs" />
+    <Compile Include="Models\Halls.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MovieDetails.cs" />
+    <Compile Include="Models\Show.cs" />
+    <Compile Include="Models\ShowSeat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -261,16 +251,21 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
-    <Content Include="Views\Cinemas\Create.cshtml" />
-    <Content Include="Views\Cinemas\Delete.cshtml" />
-    <Content Include="Views\Cinemas\Details.cshtml" />
-    <Content Include="Views\Cinemas\Edit.cshtml" />
-    <Content Include="Views\Cinemas\Index.cshtml" />
     <Content Include="Views\MovieDetails\Create.cshtml" />
     <Content Include="Views\MovieDetails\Delete.cshtml" />
     <Content Include="Views\MovieDetails\Details.cshtml" />
     <Content Include="Views\MovieDetails\Edit.cshtml" />
     <Content Include="Views\MovieDetails\Index.cshtml" />
+    <Content Include="Views\Shows\Create.cshtml" />
+    <Content Include="Views\Shows\Delete.cshtml" />
+    <Content Include="Views\Shows\Details.cshtml" />
+    <Content Include="Views\Shows\Edit.cshtml" />
+    <Content Include="Views\Shows\Index.cshtml" />
+    <Content Include="Views\Bookings\Create.cshtml" />
+    <Content Include="Views\Bookings\Delete.cshtml" />
+    <Content Include="Views\Bookings\Details.cshtml" />
+    <Content Include="Views\Bookings\Edit.cshtml" />
+    <Content Include="Views\Bookings\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -290,20 +285,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202212070846034_Initialdata.resx">
-      <DependentUpon>202212070846034_Initialdata.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202212071618196_cinemaAndMovieTable.resx">
-      <DependentUpon>202212071618196_cinemaAndMovieTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202212071630121_AddMovieTable.resx">
-      <DependentUpon>202212071630121_AddMovieTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202212071646392_solve.resx">
-      <DependentUpon>202212071646392_solve.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202212071652407_solve2AndLanguages.resx">
-      <DependentUpon>202212071652407_solve2AndLanguages.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202212081548538_Initial.resx">
+      <DependentUpon>202212081548538_Initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
