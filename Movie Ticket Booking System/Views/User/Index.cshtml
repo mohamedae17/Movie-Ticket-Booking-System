@@ -5,15 +5,28 @@
 }
 
 <h2>Index</h2>
-<ul>
-    @foreach (var movie in Model.ToList())
-    {
-        @movie.cinema
-        foreach (var item in movie.MovieDetails)
+@using (Html.BeginForm("Index", "User", FormMethod.Get))
+{
+    <ul>
+        @foreach (var movie in Model.ToList())
+        {
+            @movie.cinema
+            foreach (var item in movie.MovieDetails)
             {
                 <li> <a href="~/User/Details/@item.Id"> @item.MovieName </a></li>
+                <li> @item.Language</li>
+                <li> @item.genre</li>
+                <li> @item.DateAndTime</li>
+                <li> @item.Country</li>
             }
 
-    }
+        }
 
-</ul>
+    </ul>
+    <b> Search Option: </b>
+    @Html.RadioButton("option", "Name") <text>Name</text>
+    @Html.RadioButton("option", "Genere") <text> Genere </text>
+    @Html.RadioButton("option", "Country")<text>Country</text>
+    @Html.TextBox("search")
+    <input type="submit" name="submit" value="Search" />
+}

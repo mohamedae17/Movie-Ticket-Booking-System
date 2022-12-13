@@ -18,33 +18,55 @@ namespace Movie_Ticket_Booking_System.Controllers
             _context = new ApplicationDbContext();
         }
         // GET: User
-        public ActionResult Index()
+        public ActionResult Index(string option, string search)
         {
             List<MoviesInCinema> list = new List<MoviesInCinema>();
-            List<Cinema> cinemas = _context.Cinemas.ToList();
-            foreach (var cinema in cinemas)
+            if (option == "Name")
             {
                 var item = new MoviesInCinema();
-                item.cinema = cinema.CinemaName;
-                List<MovieDetails> Movies = new List<MovieDetails>();
-                var Halls = _context.Halls.Where(h => h.CinemaId == cinema.Id).ToList();
-                List<Show> shows = new List<Show>();
-                foreach (var Hall in Halls)
-                {
-                    var ShowList = _context.Shows.Where(s => s.HallId == Hall.Id).DefaultIfEmpty().Single();
-                    shows.Add(ShowList);
-                }
-                foreach (var show in shows)
-                {
-                    if(show != null)
-                    { 
-                        var MovieList = _context.MovieDetails.Where(m => m.Id == show.MovieId).FirstOrDefault();
-                        Movies.Add(MovieList);
-                    }
-                }
-                item.MovieDetails = Movies;
+                item.cinema = "Search Result";
+                item.MovieDetails = _context.MovieDetails.Where(x => x.MovieName.StartsWith(search) || search == null).ToList();
                 list.Add(item);
+                //Index action method will return a view with a student records based on what a user specify the value in textbox  
+                return View(list);
             }
+            else if (option == "Genere")
+            {
+                var item = new MoviesInCinema();
+                item.cinema = "Search Result";
+                item.MovieDetails = _context.MovieDetails.Where(x => x.genre.StartsWith(search) || search == null).ToList();
+                list.Add(item);
+                //Index action method will return a view with a student records based on what a user specify the value in textbox  
+                return View(list);
+            }
+            else
+            {
+                List<Cinema> cinemas = _context.Cinemas.ToList();
+                foreach (var cinema in cinemas)
+                {
+                    var item = new MoviesInCinema();
+                    item.cinema = cinema.CinemaName;
+                    List<MovieDetails> Movies = new List<MovieDetails>();
+                    var Halls = _context.Halls.Where(h => h.CinemaId == cinema.Id).ToList();
+                    List<Show> shows = new List<Show>();
+                    foreach (var Hall in Halls)
+                    {
+                        var ShowList = _context.Shows.Where(s => s.HallId == Hall.Id).DefaultIfEmpty().Single();
+                        shows.Add(ShowList);
+                    }
+                    foreach (var show in shows)
+                    {
+                        if (show != null)
+                        {
+                            var MovieList = _context.MovieDetails.Where(m => m.Id == show.MovieId).FirstOrDefault();
+                            Movies.Add(MovieList);
+                        }
+                    }
+                    item.MovieDetails = Movies;
+                    list.Add(item);
+                }
+            }
+           
             return View(list);
         }
         // GET: MovieDetails/Details/5
