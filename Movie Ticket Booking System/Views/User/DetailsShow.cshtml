@@ -1,0 +1,105 @@
+﻿@model Movie_Ticket_Booking_System.ViewModels.BookNowView
+@{
+    ViewBag.Title = "DetailsShow";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>DetailsShow</h2>
+@using (Html.BeginForm())
+{
+<div>
+    <h4>MovieDetails</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.show.Halls.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.show.Halls.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.show.movieDetails.MovieName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.show.movieDetails.MovieName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.show.movieDetails.MovieDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.show.movieDetails.MovieDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.show.movieDetails.durationMinutes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.show.movieDetails.durationMinutes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.show.movieDetails.Language)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.show.movieDetails.Language)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.show.movieDetails.DateAndTime)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.show.movieDetails.DateAndTime)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.show.movieDetails.Country)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.show.movieDetails.Country)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.show.movieDetails.genre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.show.movieDetails.genre)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.show.movieDetails.MoviePicture)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.show.movieDetails.MoviePicture)
+        </dd>
+
+    </dl>
+        @Html.HiddenFor(x => Model.show.movieDetails.Language)
+        @Html.HiddenFor(x => Model.show.movieDetails.MovieName)
+        @Html.HiddenFor(x => Model.number)
+
+    @for (int i = 0; i < Model.showSeatofMovie.Count; i++)
+    {
+        @Html.HiddenFor(m => Model.showSeatofMovie[i].Id)
+        @Html.HiddenFor(m => Model.showSeatofMovie[i].seatRow)
+        @Html.HiddenFor(m => Model.showSeatofMovie[i].ShowId)
+        @Html.HiddenFor(m => Model.showSeatofMovie[i].BookingNumber)
+        @Html.EditorFor(model => Model.showSeatofMovie[i].isReserved);
+    }
+
+    <input type="submit" name="submit" value="Book" />
+
+    <p>@ViewBag.Message</p>
+</div>
+
+
+}

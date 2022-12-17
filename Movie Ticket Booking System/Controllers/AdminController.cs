@@ -29,7 +29,7 @@ namespace Movie_Ticket_Booking_System.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,MovieName,MovieDescription,durationMinutes,Language,DateAndTime,Country,genre,MoviePicture")] MovieDetails movieDetails)
+        public ActionResult Create( MovieDetails movieDetails)
         {
             if (ModelState.IsValid)
             {
@@ -115,7 +115,7 @@ namespace Movie_Ticket_Booking_System.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateShow([Bind(Include = "ID,createOn,startTime,endDate,HallId,MovieId")] Show show)
+        public ActionResult CreateShow(Show show)
         {
             if (ModelState.IsValid)
             {
@@ -126,6 +126,19 @@ namespace Movie_Ticket_Booking_System.Controllers
                 else
                 {
                 _context.Shows.Add(show);
+                    var x = _context.Halls.Where(y => y.Id == show.HallId).Single();
+                    int g = x.totalSeats;
+                    
+                    for(int i = 0; i < g; i++)
+                    {
+                        _context.ShowSeat.Add(new ShowSeat()
+                        {
+                            ShowId = show.ID,
+                            createdOn = DateTime.Now,
+                            seatRow = i
+                        }) ;
+                        _context.SaveChanges();
+                    }
                 _context.SaveChanges();
                 return RedirectToAction("IndexShow");
                 }

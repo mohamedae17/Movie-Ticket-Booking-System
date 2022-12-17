@@ -3,7 +3,7 @@ namespace Movie_Ticket_Booking_System.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class Initial : DbMigration
+    public partial class init : DbMigration
     {
         public override void Up()
         {
@@ -30,40 +30,6 @@ namespace Movie_Ticket_Booking_System.Migrations
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Cinemas", t => t.CinemaId, cascadeDelete: true)
                 .Index(t => t.CinemaId);
-            
-            CreateTable(
-                "dbo.CinemaHallSeats",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        seatRow = c.Int(nullable: false),
-                        seatColum = c.Int(nullable: false),
-                        HallId = c.Int(nullable: false),
-                        seatNumber = c.Int(),
-                        isReserved = c.Boolean(),
-                        price = c.Double(),
-                        BookId = c.Int(),
-                        Discriminator = c.String(nullable: false, maxLength: 128),
-                        Show_ID = c.Int(),
-                    })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Halls", t => t.HallId, cascadeDelete: true)
-                .ForeignKey("dbo.Bookings", t => t.BookId, cascadeDelete: true)
-                .ForeignKey("dbo.Shows", t => t.Show_ID)
-                .Index(t => t.HallId)
-                .Index(t => t.BookId)
-                .Index(t => t.Show_ID);
-            
-            CreateTable(
-                "dbo.Bookings",
-                c => new
-                    {
-                        numberOfSeats = c.Int(nullable: false, identity: true),
-                        BookingNumber = c.String(),
-                        createdOn = c.DateTime(nullable: false),
-                        BookingStatus = c.Boolean(nullable: false),
-                    })
-                .PrimaryKey(t => t.numberOfSeats);
             
             CreateTable(
                 "dbo.Shows",
@@ -97,6 +63,26 @@ namespace Movie_Ticket_Booking_System.Migrations
                         MoviePicture = c.String(),
                     })
                 .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.ShowSeats",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        seatRow = c.Int(nullable: false),
+                        seatColum = c.Int(nullable: false),
+                        seatNumber = c.Int(nullable: false),
+                        isReserved = c.Boolean(nullable: false),
+                        price = c.Double(nullable: false),
+                        numberOfSeats = c.Int(nullable: false),
+                        BookingNumber = c.String(),
+                        createdOn = c.DateTime(nullable: false),
+                        BookingStatus = c.Boolean(nullable: false),
+                        ShowId = c.Int(nullable: false),
+                    })
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Shows", t => t.ShowId, cascadeDelete: true)
+                .Index(t => t.ShowId);
             
             CreateTable(
                 "dbo.AspNetRoles",
@@ -174,11 +160,9 @@ namespace Movie_Ticket_Booking_System.Migrations
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserClaims", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
-            DropForeignKey("dbo.CinemaHallSeats", "Show_ID", "dbo.Shows");
+            DropForeignKey("dbo.ShowSeats", "ShowId", "dbo.Shows");
             DropForeignKey("dbo.Shows", "MovieId", "dbo.MovieDetails");
             DropForeignKey("dbo.Shows", "HallId", "dbo.Halls");
-            DropForeignKey("dbo.CinemaHallSeats", "BookId", "dbo.Bookings");
-            DropForeignKey("dbo.CinemaHallSeats", "HallId", "dbo.Halls");
             DropForeignKey("dbo.Halls", "CinemaId", "dbo.Cinemas");
             DropIndex("dbo.AspNetUserLogins", new[] { "UserId" });
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
@@ -186,21 +170,18 @@ namespace Movie_Ticket_Booking_System.Migrations
             DropIndex("dbo.AspNetUserRoles", new[] { "RoleId" });
             DropIndex("dbo.AspNetUserRoles", new[] { "UserId" });
             DropIndex("dbo.AspNetRoles", "RoleNameIndex");
+            DropIndex("dbo.ShowSeats", new[] { "ShowId" });
             DropIndex("dbo.Shows", new[] { "MovieId" });
             DropIndex("dbo.Shows", new[] { "HallId" });
-            DropIndex("dbo.CinemaHallSeats", new[] { "Show_ID" });
-            DropIndex("dbo.CinemaHallSeats", new[] { "BookId" });
-            DropIndex("dbo.CinemaHallSeats", new[] { "HallId" });
             DropIndex("dbo.Halls", new[] { "CinemaId" });
             DropTable("dbo.AspNetUserLogins");
             DropTable("dbo.AspNetUserClaims");
             DropTable("dbo.AspNetUsers");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetRoles");
+            DropTable("dbo.ShowSeats");
             DropTable("dbo.MovieDetails");
             DropTable("dbo.Shows");
-            DropTable("dbo.Bookings");
-            DropTable("dbo.CinemaHallSeats");
             DropTable("dbo.Halls");
             DropTable("dbo.Cinemas");
         }

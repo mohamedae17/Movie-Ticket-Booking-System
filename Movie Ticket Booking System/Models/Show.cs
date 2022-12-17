@@ -16,10 +16,10 @@ namespace Movie_Ticket_Booking_System.Models
         public DateTime endDate { get; set; }
         [ForeignKey("Halls")]
         public int HallId { get; set; }
-        public Halls Halls { get; set; }
+        public virtual Halls Halls { get; set; }
         [ForeignKey("movieDetails")]
         public int MovieId { get; set; }
-        public MovieDetails movieDetails { get; set; }
+        public virtual MovieDetails movieDetails { get; set; }
         public ICollection<ShowSeat> showSeats { get; set; }
 
     }

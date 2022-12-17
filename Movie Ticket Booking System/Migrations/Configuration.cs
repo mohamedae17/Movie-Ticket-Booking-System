@@ -9,7 +9,7 @@ namespace Movie_Ticket_Booking_System.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationsEnabled = false;
         }
 
         protected override void Seed(Movie_Ticket_Booking_System.Models.ApplicationDbContext context)

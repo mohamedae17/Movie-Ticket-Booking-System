@@ -83,5 +83,83 @@ namespace Movie_Ticket_Booking_System.Controllers
             }
             return View(movieDetails);
         }
+
+        public ActionResult CheckBookSeat()
+        {
+            var getBookTable = _context.ShowSeat.ToList();
+            return View(getBookTable);
+        }
+       
+        [HttpGet]
+        public ActionResult DetailsShow(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Show show = _context.Shows.Find(id);
+            if (show == null)
+            {
+                return HttpNotFound();
+            }
+            BookNowView bookNow = new BookNowView();
+            bookNow.show = _context.Shows.Find(id);
+            //int x = show.Halls.totalSeats - _context.ShowSeat.Where(a => a.isReserved == true && a.ShowId == show.ID).Count();
+            //bookNow.chairs = x;
+            bookNow.number = _context.ShowSeat.Where(a => a.ShowId == show.ID).ToList().Count;
+            if (bookNow.showSeatofMovie == null)
+            {
+                bookNow.showSeatofMovie = new List<ShowSeat>();
+            }
+            for(int i = 0; i < bookNow.number; i++)
+            {
+                ShowSeat g = _context.ShowSeat.Where(s => s.ShowId == show.ID && s.seatRow == i).DefaultIfEmpty().Single();
+                bookNow.showSeatofMovie.Add(g);
+            }
+          //  bookNow.showSeatofMovie = null;
+            return View(bookNow);
+        }
+        [HttpPost]
+        public ActionResult DetailsShow(BookNowView bookNow)
+        {
+
+            foreach (var item in bookNow.showSeatofMovie)
+            {
+                if (item.isReserved && item.BookingNumber == null)
+                {
+                    _context.frontEndOfficers.Add(new FrontEndOfficer()
+                    {
+                        Id = item.Id,
+                        isReserved = item.isReserved,
+                        seatRow = item.seatRow,
+                        ShowId = item.ShowId,
+                        BookingNumber = item.BookingNumber
+                    });
+                    _context.SaveChanges();
+                }
+            }
+            return View(bookNow);
+        
+        }
+        [HttpGet]
+        public ActionResult FrontEndOffice()
+        {
+            return View(_context.frontEndOfficers.ToList());
+        }
+        [HttpPost]
+        public ActionResult FrontEndOffice(FrontEndOfficer frontEnd)
+        {
+           
+            frontEnd.BookingNumber = frontEnd.Id.ToString();
+            var author = _context.ShowSeat.Where(a => a.seatRow == frontEnd.seatRow && a.ShowId == frontEnd.ShowId).Single();
+            author.BookingNumber = frontEnd.BookingNumber;
+            author.isReserved = frontEnd.isReserved;
+            _context.Entry(author).State = EntityState.Modified;
+            _context.frontEndOfficers.Remove(_context.frontEndOfficers.Find(frontEnd.Id));
+            _context.SaveChanges();
+            
+            return View(_context.frontEndOfficers.ToList());
+        }
+
     }
 }

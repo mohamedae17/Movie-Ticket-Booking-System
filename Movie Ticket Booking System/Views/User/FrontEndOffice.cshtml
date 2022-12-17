@@ -1,0 +1,75 @@
+﻿@model IEnumerable<Movie_Ticket_Booking_System.Models.FrontEndOfficer>
+
+@{
+    ViewBag.Title = "FrontEndOffice";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>FrontEndOffice</h2>
+@using (Html.BeginForm())
+{
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
+    <table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Show.ID)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.seatRow)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.seatColum)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.isReserved)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.BookingNumber)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.createdOn)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Show.ID)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.seatRow)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.seatColum)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.isReserved)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BookingNumber)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.createdOn)
+                </td>
+                <td>
+                    @Html.HiddenFor(modelItem => item.Id)
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </td>
+            </tr>
+
+        }
+
+        @for (int i = 0; i < Model.Count(); i++)
+        {
+            @Html.HiddenFor(modelItem => Model.ElementAt(i).Id)
+            @Html.HiddenFor(modelItem => Model.ElementAt(i).isReserved)
+            @Html.HiddenFor(modelItem => Model.ElementAt(i).seatRow)
+            @Html.HiddenFor(modelItem => Model.ElementAt(i).ShowId)
+        }
+
+    </table>
+}

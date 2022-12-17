@@ -7,14 +7,17 @@ using System.Web;
 
 namespace Movie_Ticket_Booking_System.Models
 {
-    public class ShowSeat : CinemaHallSeat
+    public class ShowSeat
     {
         [Key]
-        public int seatNumber { get; set; }
+        public int Id { get; set; }
+        public int seatRow { get; set; }
+        public int seatColum { get; set; }
         public bool isReserved { get; set; }
-        public double price { get; set; }
-        [ForeignKey("booking")]
-        public int BookId { get; set; }
-        public Booking booking { get; set; }
+        public string BookingNumber { get; set; }
+        public DateTime? createdOn { get; set; }
+        [ForeignKey("Show")]
+        public int ShowId { get; set; }
+        public Show Show { get; set; }
     }
 }

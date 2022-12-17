@@ -17,7 +17,6 @@ namespace Movie_Ticket_Booking_System.Models
         [ForeignKey("Cinema")]
         public int CinemaId { get; set; }
         public Cinema Cinema { get; set; }
-        public ICollection<CinemaHallSeat> cinemaHallSeats { get; set; }
-        public ICollection<Show> shows { get; set; }
+        public virtual ICollection<Show> shows { get; set; }
     }
 }

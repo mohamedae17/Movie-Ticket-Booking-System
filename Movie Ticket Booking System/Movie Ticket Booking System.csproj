@@ -171,21 +171,46 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
-    <Compile Include="Controllers\MovieDetailsController.cs" />
-    <Compile Include="Controllers\ShowsController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202212081548538_Initial.cs" />
-    <Compile Include="Migrations\202212081548538_Initial.Designer.cs">
-      <DependentUpon>202212081548538_Initial.cs</DependentUpon>
+    <Compile Include="Migrations\202212141846374_init.cs" />
+    <Compile Include="Migrations\202212141846374_init.Designer.cs">
+      <DependentUpon>202212141846374_init.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202212142024182_changeModel.cs" />
+    <Compile Include="Migrations\202212142024182_changeModel.Designer.cs">
+      <DependentUpon>202212142024182_changeModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202212161238559_editrowsandcolm.cs" />
+    <Compile Include="Migrations\202212161238559_editrowsandcolm.Designer.cs">
+      <DependentUpon>202212161238559_editrowsandcolm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202212161256256_editbookStatue.cs" />
+    <Compile Include="Migrations\202212161256256_editbookStatue.Designer.cs">
+      <DependentUpon>202212161256256_editbookStatue.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202212161332551_editbooknow.cs" />
+    <Compile Include="Migrations\202212161332551_editbooknow.Designer.cs">
+      <DependentUpon>202212161332551_editbooknow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202212162059028_datetime.cs" />
+    <Compile Include="Migrations\202212162059028_datetime.Designer.cs">
+      <DependentUpon>202212162059028_datetime.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202212171132205_frontendoffice.cs" />
+    <Compile Include="Migrations\202212171132205_frontendoffice.Designer.cs">
+      <DependentUpon>202212171132205_frontendoffice.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202212171133357_frontendofficetable.cs" />
+    <Compile Include="Migrations\202212171133357_frontendofficetable.Designer.cs">
+      <DependentUpon>202212171133357_frontendofficetable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\Booking.cs" />
     <Compile Include="Models\Cinema.cs" />
-    <Compile Include="Models\CinemaHallSeat.cs" />
+    <Compile Include="Models\FrontEndOfficer.cs" />
     <Compile Include="Models\Halls.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -194,6 +219,7 @@
     <Compile Include="Models\ShowSeat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\BookNowView.cs" />
     <Compile Include="ViewModels\MoviesInCinema.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -254,18 +280,8 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Admin\Create.cshtml" />
-    <Content Include="Views\MovieDetails\Create.cshtml" />
-    <Content Include="Views\MovieDetails\Delete.cshtml" />
-    <Content Include="Views\MovieDetails\Details.cshtml" />
-    <Content Include="Views\MovieDetails\Edit.cshtml" />
-    <Content Include="Views\MovieDetails\Index.cshtml" />
     <Content Include="Views\Admin\Index.cshtml" />
     <Content Include="Views\Admin\CreateShow.cshtml" />
-    <Content Include="Views\Shows\Create.cshtml" />
-    <Content Include="Views\Shows\Delete.cshtml" />
-    <Content Include="Views\Shows\Details.cshtml" />
-    <Content Include="Views\Shows\Edit.cshtml" />
-    <Content Include="Views\Shows\Index.cshtml" />
     <Content Include="Views\Admin\IndexShow.cshtml" />
     <Content Include="Views\Admin\EditMovies.cshtml" />
     <Content Include="Views\Admin\DeleteMovies.cshtml" />
@@ -273,6 +289,8 @@
     <Content Include="Views\Admin\DeleteShow.cshtml" />
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Details.cshtml" />
+    <Content Include="Views\User\DetailsShow.cshtml" />
+    <Content Include="Views\User\FrontEndOffice.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -292,8 +310,29 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202212081548538_Initial.resx">
-      <DependentUpon>202212081548538_Initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202212141846374_init.resx">
+      <DependentUpon>202212141846374_init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212142024182_changeModel.resx">
+      <DependentUpon>202212142024182_changeModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212161238559_editrowsandcolm.resx">
+      <DependentUpon>202212161238559_editrowsandcolm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212161256256_editbookStatue.resx">
+      <DependentUpon>202212161256256_editbookStatue.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212161332551_editbooknow.resx">
+      <DependentUpon>202212161332551_editbooknow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212162059028_datetime.resx">
+      <DependentUpon>202212162059028_datetime.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212171132205_frontendoffice.resx">
+      <DependentUpon>202212171132205_frontendoffice.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212171133357_frontendofficetable.resx">
+      <DependentUpon>202212171133357_frontendofficetable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
