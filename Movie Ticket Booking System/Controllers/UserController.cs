@@ -17,35 +17,71 @@ namespace Movie_Ticket_Booking_System.Controllers
         {
             _context = new ApplicationDbContext();
         }
+        /// <summary>
+        /// Require 1 : It should be able to list the cities where affiliate cinemas are located.
+        /// Require 4 : Customers should be able to search movies by their title, language, genre, release date, and city name
+        /// </summary>
+        /// <param name="option">title, language, genre, release date, and city name</param>
+        /// <param name="search">String in Serach text box</param>
+        /// <returns></returns>
         // GET: User
         public ActionResult Index(string option, string search)
         {
-            List<MoviesInCinema> list = new List<MoviesInCinema>();
-            if (option == "Name")
+            List<CinemasInCities> list = new List<CinemasInCities>();
+            if (option == "Title")
             {
-                var item = new MoviesInCinema();
-                item.cinema = "Search Result";
-                item.MovieDetails = _context.MovieDetails.Where(x => x.MovieName.StartsWith(search) || search == null).ToList();
+                var item = new CinemasInCities();
+                item.city = "Searh Result";
+                item.cinema = null;
+                //item.cinema = _context.Cinemas.Where(x => x.CinemaName.StartsWith(search) || search == null).ToList();
+                item.movieDetails = _context.MovieDetails.Where(x => x.MovieName.StartsWith(search) || search == null).ToList();
                 list.Add(item);
                 //Index action method will return a view with a student records based on what a user specify the value in textbox  
                 return View(list);
             }
             else if (option == "Genere")
             {
-                var item = new MoviesInCinema();
-                item.cinema = "Search Result";
-                item.MovieDetails = _context.MovieDetails.Where(x => x.genre.StartsWith(search) || search == null).ToList();
+                var item = new CinemasInCities();
+                item.city = "Searh Result";
+                item.cinema = null;
+                //item.cinema = _context.Cinemas.Where(x => x.CinemaName.StartsWith(search) || search == null).ToList();
+                item.movieDetails = _context.MovieDetails.Where(x => x.genre.StartsWith(search) || search == null).ToList();
                 list.Add(item);
                 //Index action method will return a view with a student records based on what a user specify the value in textbox  
                 return View(list);
             }
-            else
+            else if (option == "Language")
             {
-                List<Cinema> cinemas = _context.Cinemas.ToList();
-                foreach (var cinema in cinemas)
+                var item = new CinemasInCities();
+                item.city = "Searh Result";
+                item.cinema = null;
+                //item.cinema = _context.Cinemas.Where(x => x.CinemaName.StartsWith(search) || search == null).ToList();
+                item.movieDetails = _context.MovieDetails.Where(x => x.Language.StartsWith(search) || search == null).ToList();
+                list.Add(item);
+                //Index action method will return a view with a student records based on what a user specify the value in textbox  
+                return View(list);
+            }
+            else if (option == "ReleaseDate")
+            {
+                var item = new CinemasInCities();
+                item.city = "Searh Result";
+                item.cinema = null;
+                //item.cinema = _context.Cinemas.Where(x => x.CinemaName.StartsWith(search) || search == null).ToList();
+                item.movieDetails = _context.MovieDetails.Where(x => x.RleaseDate.StartsWith(search) || search == null).ToList();
+                list.Add(item);
+                //Index action method will return a view with a student records based on what a user specify the value in textbox  
+                return View(list);
+            }
+            else if (option == "CityName")
+            {
+                
+                List<Cinema> Cin = new List<Cinema>();
+                int K = _context.cities.Where(x => x.Name.StartsWith(search) || search == null).Single().Id;
+                Cin = _context.Cinemas.Where(x => x.CityId == K || search == null).ToList();
+                //item.cinema = _context.Cinemas.Where(x => x.CinemaName.StartsWith(search) || search == null).ToList();
+                foreach (var cinema in Cin)
                 {
-                    var item = new MoviesInCinema();
-                    item.cinema = cinema.CinemaName;
+                    var item = new CinemasInCities();
                     List<MovieDetails> Movies = new List<MovieDetails>();
                     var Halls = _context.Halls.Where(h => h.CinemaId == cinema.Id).ToList();
                     List<Show> shows = new List<Show>();
@@ -62,9 +98,59 @@ namespace Movie_Ticket_Booking_System.Controllers
                             Movies.Add(MovieList);
                         }
                     }
-                    item.MovieDetails = Movies;
+                    item.movieDetails = Movies;
                     list.Add(item);
                 }
+                //list.Add(item);
+                //Index action method will return a view with a student records based on what a user specify the value in textbox  
+                return View(list);
+            }
+            else
+            {
+                List<City> cities = _context.cities.ToList();
+               // List<Cinema> cinemas = _context.Cinemas.ToList();
+                foreach(var city in cities)
+                {
+                    var Cinemas = _context.Cinemas.Where(c => c.CityId == city.Id).ToList();
+                    List<Cinema> Cin = new List<Cinema>();
+                    foreach (var c in Cinemas)
+                    {
+                        var CinemaList = _context.Cinemas.Where(s => s.Id == c.Id).DefaultIfEmpty().Single();
+                        if(CinemaList != null)
+                             Cin.Add(CinemaList);
+                    }
+                    //item.cinema = Cin;
+                    int i = 0;
+                    foreach (var cinema in Cin)
+                    {
+                        var item = new CinemasInCities();
+                        item.city = city.Name;
+                        item.cinema = cinema;
+                        item.movieDetails = new List<MovieDetails>();
+                        List<MovieDetails> Movies = new List<MovieDetails>();
+                        var Halls = _context.Halls.Where(h => h.CinemaId == cinema.Id).ToList();
+                        List<Show> shows = new List<Show>();
+                        foreach (var Hall in Halls)
+                        {
+                            var ShowList = _context.Shows.Where(s => s.HallId == Hall.Id).DefaultIfEmpty().Single();
+                            shows.Add(ShowList);
+                        }
+                        foreach (var show in shows)
+                        {
+                            if (show != null)
+                            {
+                                var MovieList = _context.MovieDetails.Where(m => m.Id == show.MovieId).FirstOrDefault();
+                                Movies.Add(MovieList);
+                            }
+                        }
+                        item.movieDetails=Movies;
+                        list.Add(item);
+                        // i++;
+                        //item.MovieDetails = Movies;
+                    }
+                    
+                }
+              
             }
            
             return View(list);

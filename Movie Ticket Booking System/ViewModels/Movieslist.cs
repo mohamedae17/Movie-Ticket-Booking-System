@@ -6,9 +6,9 @@ using System.Web;
 
 namespace Movie_Ticket_Booking_System.ViewModels
 {
-    public class MoviesInCinema
+    public class Movieslist
     {
-        public string cinema { get; set; }
-        public List<MovieDetails> MovieDetails { get; set; }
+        public string CinemaName { get; set; }
+        public List<MovieDetails> movieDetails { get; set; }
     }
 }

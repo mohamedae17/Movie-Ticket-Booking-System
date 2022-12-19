@@ -169,6 +169,8 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\CinemasController.cs" />
+    <Compile Include="Controllers\CitiesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -207,20 +209,39 @@
     <Compile Include="Migrations\202212171133357_frontendofficetable.Designer.cs">
       <DependentUpon>202212171133357_frontendofficetable.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202212180826204_Notifications.cs" />
+    <Compile Include="Migrations\202212180826204_Notifications.Designer.cs">
+      <DependentUpon>202212180826204_Notifications.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202212180846281_Cities.cs" />
+    <Compile Include="Migrations\202212180846281_Cities.Designer.cs">
+      <DependentUpon>202212180846281_Cities.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202212180849240_editcinemaModel.cs" />
+    <Compile Include="Migrations\202212180849240_editcinemaModel.Designer.cs">
+      <DependentUpon>202212180849240_editcinemaModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202212190755353_editMovieModel.cs" />
+    <Compile Include="Migrations\202212190755353_editMovieModel.Designer.cs">
+      <DependentUpon>202212190755353_editMovieModel.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Cinema.cs" />
+    <Compile Include="Models\City.cs" />
     <Compile Include="Models\FrontEndOfficer.cs" />
     <Compile Include="Models\Halls.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\MovieDetails.cs" />
+    <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\Show.cs" />
     <Compile Include="Models\ShowSeat.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\BookNowView.cs" />
-    <Compile Include="ViewModels\MoviesInCinema.cs" />
+    <Compile Include="ViewModels\CinemasInCities.cs" />
+    <Compile Include="ViewModels\Movieslist.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -291,6 +312,16 @@
     <Content Include="Views\User\Details.cshtml" />
     <Content Include="Views\User\DetailsShow.cshtml" />
     <Content Include="Views\User\FrontEndOffice.cshtml" />
+    <Content Include="Views\Cities\Create.cshtml" />
+    <Content Include="Views\Cities\Delete.cshtml" />
+    <Content Include="Views\Cities\Details.cshtml" />
+    <Content Include="Views\Cities\Edit.cshtml" />
+    <Content Include="Views\Cities\Index.cshtml" />
+    <Content Include="Views\Cinemas\Create.cshtml" />
+    <Content Include="Views\Cinemas\Delete.cshtml" />
+    <Content Include="Views\Cinemas\Details.cshtml" />
+    <Content Include="Views\Cinemas\Edit.cshtml" />
+    <Content Include="Views\Cinemas\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -333,6 +364,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202212171133357_frontendofficetable.resx">
       <DependentUpon>202212171133357_frontendofficetable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212180826204_Notifications.resx">
+      <DependentUpon>202212180826204_Notifications.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212180846281_Cities.resx">
+      <DependentUpon>202212180846281_Cities.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212180849240_editcinemaModel.resx">
+      <DependentUpon>202212180849240_editcinemaModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212190755353_editMovieModel.resx">
+      <DependentUpon>202212190755353_editMovieModel.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

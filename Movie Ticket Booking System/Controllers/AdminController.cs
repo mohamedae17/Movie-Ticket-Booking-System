@@ -113,6 +113,12 @@ namespace Movie_Ticket_Booking_System.Controllers
             return View();
         }
 
+        /// <summary>
+        ///  Require 2 : hall can run one movie show at a time. 
+        ///  Require 3 : o	Each Movie will have multiple shows
+        /// </summary>
+        /// <param name="show"></param>
+        /// <returns></returns>
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateShow(Show show)
