@@ -214,5 +214,231 @@ namespace Movie_Ticket_Booking_System.Controllers
             _context.SaveChanges();
             return RedirectToAction("IndexShow");
         }
+
+        // GET: Cities
+        public ActionResult IndexCity()
+        {
+            return View(_context.cities.ToList());
+        }
+
+        // GET: Cities/Details/5
+        public ActionResult DetailsCity(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            City city = _context.cities.Find(id);
+            if (city == null)
+            {
+                return HttpNotFound();
+            }
+            return View(city);
+        }
+
+        // GET: Cities/Create
+        public ActionResult CreateCity()
+        {
+            return View();
+        }
+
+        // POST: Cities/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateCity([Bind(Include = "Id,Name")] City city)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.cities.Add(city);
+                _context.SaveChanges();
+                return RedirectToAction("IndexCity");
+            }
+
+            return View(city);
+        }
+
+        // GET: Cities/Edit/5
+        public ActionResult EditCity(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            City city = _context.cities.Find(id);
+            if (city == null)
+            {
+                return HttpNotFound();
+            }
+            return View(city);
+        }
+
+        // POST: Cities/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditCity([Bind(Include = "Id,Name")] City city)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Entry(city).State = EntityState.Modified;
+                _context.SaveChanges();
+                return RedirectToAction("IndexCity");
+            }
+            return View(city);
+        }
+
+        // GET: Cities/Delete/5
+        public ActionResult DeleteCity(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            City city = _context.cities.Find(id);
+            if (city == null)
+            {
+                return HttpNotFound();
+            }
+            return View(city);
+        }
+
+        // POST: Cities/Delete/5
+        [HttpPost, ActionName("DeleteCity")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmedCity(int id)
+        {
+            City city = _context.cities.Find(id);
+            _context.cities.Remove(city);
+            _context.SaveChanges();
+            return RedirectToAction("IndexCity");
+        }
+
+        // GET: Cinemas
+        public ActionResult IndexCinema()
+        {
+            var cinemas = _context.Cinemas.Include(c => c.City);
+            return View(cinemas.ToList());
+        }
+
+        // GET: Cinemas/Details/5
+        public ActionResult DetailsCinema(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Cinema cinema = _context.Cinemas.Find(id);
+            if (cinema == null)
+            {
+                return HttpNotFound();
+            }
+            return View(cinema);
+        }
+
+        // GET: Cinemas/Create
+        public ActionResult CreateCinema()
+        {
+            ViewBag.CityId = new SelectList(_context.cities, "Id", "Name");
+            return View();
+        }
+        /// <summary>
+        /// Require 2 : Each cinema can have multiple halls 
+        /// </summary>
+        /// <param name="cinema"></param>
+        /// <returns></returns>
+        // POST: Cinemas/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateCinema([Bind(Include = "Id,CinemaName,CityId,totalHalls")] Cinema cinema)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Cinemas.Add(cinema);
+                //var x = db..Where(y => y.Id == show.HallId).Single();
+                int g = cinema.totalHalls;
+                int HallNum = 1;
+                string CinemaName = cinema.CinemaName;
+                for (int i = 0; i < g; i++)
+                {
+                    _context.Halls.Add(new Halls()
+                    {
+                        Name = "Hall " + (HallNum++)+"-" + CinemaName,
+                        totalSeats = 10,
+                        CinemaId = cinema.Id
+                    });
+                    _context.SaveChanges();
+                }
+                _context.SaveChanges();
+                return RedirectToAction("IndexCinema");
+            }
+
+            ViewBag.CityId = new SelectList(_context.cities, "Id", "Name", cinema.CityId);
+            return View(cinema);
+        }
+
+        // GET: Cinemas/Edit/5
+        public ActionResult EditCinema(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Cinema cinema = _context.Cinemas.Find(id);
+            if (cinema == null)
+            {
+                return HttpNotFound();
+            }
+            ViewBag.CityId = new SelectList(_context.cities, "Id", "Name", cinema.CityId);
+            return View(cinema);
+        }
+
+        // POST: Cinemas/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditCinema([Bind(Include = "Id,CinemaName,CityId,totalHalls")] Cinema cinema)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Entry(cinema).State = EntityState.Modified;
+                _context.SaveChanges();
+                return RedirectToAction("IndexCinema");
+            }
+            ViewBag.CityId = new SelectList(_context.cities, "Id", "Name", cinema.CityId);
+            return View(cinema);
+        }
+
+        // GET: Cinemas/Delete/5
+        public ActionResult DeleteCinema(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Cinema cinema = _context.Cinemas.Find(id);
+            if (cinema == null)
+            {
+                return HttpNotFound();
+            }
+            return View(cinema);
+        }
+
+        // POST: Cinemas/Delete/5
+        [HttpPost, ActionName("DeleteCinema")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteCinemaConfirmed(int id)
+        {
+            Cinema cinema = _context.Cinemas.Find(id);
+            _context.Cinemas.Remove(cinema);
+            _context.SaveChanges();
+            return RedirectToAction("IndexCinema");
+        }
+
     }
 }

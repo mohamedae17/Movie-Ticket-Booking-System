@@ -20,7 +20,7 @@
                 @Html.DisplayNameFor(model => model.seatRow)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.seatColum)
+                @Html.DisplayNameFor(model => model.PayWay)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.isReserved)
@@ -44,7 +44,7 @@
                     @Html.DisplayFor(modelItem => item.seatRow)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.seatColum)
+                    @Html.DisplayFor(modelItem => item.PayWay)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.isReserved)
@@ -68,6 +68,7 @@
             @Html.HiddenFor(modelItem => Model.ElementAt(i).Id)
             @Html.HiddenFor(modelItem => Model.ElementAt(i).isReserved)
             @Html.HiddenFor(modelItem => Model.ElementAt(i).seatRow)
+            @Html.HiddenFor(modelItem => Model.ElementAt(i).PayWay)
             @Html.HiddenFor(modelItem => Model.ElementAt(i).ShowId)
         }
 

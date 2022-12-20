@@ -1,4 +1,4 @@
-﻿@model Movie_Ticket_Booking_System.Models.MovieDetails
+﻿@model Movie_Ticket_Booking_System.ViewModels.MovieWithShows
 
 @{
     ViewBag.Title = "Details";
@@ -12,71 +12,78 @@
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.MovieName)
+            @Html.DisplayNameFor(model => model.movieDetails.MovieName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.MovieName)
+            @Html.DisplayFor(model => model.movieDetails.MovieName)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.MovieDescription)
+            @Html.DisplayNameFor(model => model.movieDetails.MovieDescription)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.MovieDescription)
+            @Html.DisplayFor(model => model.movieDetails.MovieDescription)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.durationMinutes)
+            @Html.DisplayNameFor(model => model.movieDetails.durationMinutes)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.durationMinutes)
+            @Html.DisplayFor(model => model.movieDetails.durationMinutes)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Language)
+            @Html.DisplayNameFor(model => model.movieDetails.Language)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Language)
+            @Html.DisplayFor(model => model.movieDetails.Language)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DateAndTime)
+            @Html.DisplayNameFor(model => model.movieDetails.RleaseDate)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.DateAndTime)
+            @Html.DisplayFor(model => model.movieDetails.RleaseDate)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Country)
+            @Html.DisplayNameFor(model => model.movieDetails.Country)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.Country)
+            @Html.DisplayFor(model => model.movieDetails.Country)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.genre)
+            @Html.DisplayNameFor(model => model.movieDetails.genre)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.genre)
+            @Html.DisplayFor(model => model.movieDetails.genre)
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.MoviePicture)
+            @Html.DisplayNameFor(model => model.movieDetails.MoviePicture)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.MoviePicture)
+            @Html.DisplayFor(model => model.movieDetails.MoviePicture)
         </dd>
-
     </dl>
-    
+
+    @foreach(var show in Model.shows)
+            {
+                @show.Halls.Name
+                @show.startTime
+        <a href="~/User/DetailsShow/@show.ID">BOOk Here</a>
+        <br/>
+            }
+
 </div>
 
 <p>

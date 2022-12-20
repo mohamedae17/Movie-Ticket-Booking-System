@@ -169,8 +169,6 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
-    <Compile Include="Controllers\CinemasController.cs" />
-    <Compile Include="Controllers\CitiesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -225,6 +223,10 @@
     <Compile Include="Migrations\202212190755353_editMovieModel.Designer.cs">
       <DependentUpon>202212190755353_editMovieModel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202212201944509_CashOrCredit.cs" />
+    <Compile Include="Migrations\202212201944509_CashOrCredit.Designer.cs">
+      <DependentUpon>202212201944509_CashOrCredit.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Cinema.cs" />
@@ -237,11 +239,17 @@
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\Show.cs" />
     <Compile Include="Models\ShowSeat.cs" />
+    <Compile Include="Payments\BankFactory.cs" />
+    <Compile Include="Payments\Cash.cs" />
+    <Compile Include="Payments\Credit.cs" />
+    <Compile Include="Payments\IBank.cs" />
+    <Compile Include="Payments\IBankFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\BookNowView.cs" />
     <Compile Include="ViewModels\CinemasInCities.cs" />
     <Compile Include="ViewModels\Movieslist.cs" />
+    <Compile Include="ViewModels\MovieWithShows.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -312,16 +320,16 @@
     <Content Include="Views\User\Details.cshtml" />
     <Content Include="Views\User\DetailsShow.cshtml" />
     <Content Include="Views\User\FrontEndOffice.cshtml" />
-    <Content Include="Views\Cities\Create.cshtml" />
-    <Content Include="Views\Cities\Delete.cshtml" />
-    <Content Include="Views\Cities\Details.cshtml" />
-    <Content Include="Views\Cities\Edit.cshtml" />
-    <Content Include="Views\Cities\Index.cshtml" />
-    <Content Include="Views\Cinemas\Create.cshtml" />
-    <Content Include="Views\Cinemas\Delete.cshtml" />
-    <Content Include="Views\Cinemas\Details.cshtml" />
-    <Content Include="Views\Cinemas\Edit.cshtml" />
-    <Content Include="Views\Cinemas\Index.cshtml" />
+    <Content Include="Views\Admin\CreateCity.cshtml" />
+    <Content Include="Views\Admin\DeleteCity.cshtml" />
+    <Content Include="Views\Admin\DetailsCity.cshtml" />
+    <Content Include="Views\Admin\EditCity.cshtml" />
+    <Content Include="Views\Admin\IndexCity.cshtml" />
+    <Content Include="Views\Admin\CreateCinema.cshtml" />
+    <Content Include="Views\Admin\DeleteCinema.cshtml" />
+    <Content Include="Views\Admin\DetailsCinema.cshtml" />
+    <Content Include="Views\Admin\EditCinema.cshtml" />
+    <Content Include="Views\Admin\IndexCinema.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -376,6 +384,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202212190755353_editMovieModel.resx">
       <DependentUpon>202212190755353_editMovieModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212201944509_CashOrCredit.resx">
+      <DependentUpon>202212201944509_CashOrCredit.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

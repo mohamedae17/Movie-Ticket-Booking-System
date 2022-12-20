@@ -51,11 +51,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.show.movieDetails.DateAndTime)
+            @Html.DisplayNameFor(model => model.show.movieDetails.RleaseDate)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.show.movieDetails.DateAndTime)
+            @Html.DisplayFor(model => model.show.movieDetails.RleaseDate)
         </dd>
 
         <dt>
@@ -83,9 +83,9 @@
         </dd>
 
     </dl>
-        @Html.HiddenFor(x => Model.show.movieDetails.Language)
-        @Html.HiddenFor(x => Model.show.movieDetails.MovieName)
-        @Html.HiddenFor(x => Model.number)
+    @Html.HiddenFor(x => Model.show.movieDetails.Language)
+    @Html.HiddenFor(x => Model.show.movieDetails.MovieName)
+    @Html.HiddenFor(x => Model.number)
 
     @for (int i = 0; i < Model.showSeatofMovie.Count; i++)
     {
@@ -93,8 +93,19 @@
         @Html.HiddenFor(m => Model.showSeatofMovie[i].seatRow)
         @Html.HiddenFor(m => Model.showSeatofMovie[i].ShowId)
         @Html.HiddenFor(m => Model.showSeatofMovie[i].BookingNumber)
-        @Html.EditorFor(model => Model.showSeatofMovie[i].isReserved);
+        if (Model.showSeatofMovie[i].isReserved == false)
+        {
+
+            @Html.EditorFor(model => Model.showSeatofMovie[i].isReserved);
+        }
+        else
+        {
+            @Html.EditorFor(model => Model.showSeatofMovie[i].isReserved, new { htmlAttributes = new { @disabled = "disabled" } })
+        }
     }
+
+    @Html.RadioButton("option", "1") <text>Credit</text>
+    @Html.RadioButton("option", "2") <text> Cash </text>
 
     <input type="submit" name="submit" value="Book" />
 

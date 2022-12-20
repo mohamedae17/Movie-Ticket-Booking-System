@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using Movie_Ticket_Booking_System.ViewModels;
 using System.Net;
+using System.Net.Mail;
+using Movie_Ticket_Booking_System.Payments;
 
 namespace Movie_Ticket_Booking_System.Controllers
 {
@@ -158,6 +160,7 @@ namespace Movie_Ticket_Booking_System.Controllers
         // GET: MovieDetails/Details/5
         public ActionResult Details(int? id)
         {
+            MovieWithShows movieWithShows = new MovieWithShows();
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -167,13 +170,17 @@ namespace Movie_Ticket_Booking_System.Controllers
             {
                 return HttpNotFound();
             }
-            return View(movieDetails);
+            movieWithShows.movieDetails = movieDetails;
+            movieWithShows.shows = _context.Shows.Where(s => s.MovieId == movieDetails.Id).ToList();
+
+            return View(movieWithShows);
         }
 
         public ActionResult CheckBookSeat()
         {
             var getBookTable = _context.ShowSeat.ToList();
             return View(getBookTable);
+
         }
        
         [HttpGet]
@@ -206,7 +213,7 @@ namespace Movie_Ticket_Booking_System.Controllers
             return View(bookNow);
         }
         [HttpPost]
-        public ActionResult DetailsShow(BookNowView bookNow)
+        public ActionResult DetailsShow(BookNowView bookNow,string option)
         {
 
             foreach (var item in bookNow.showSeatofMovie)
@@ -218,6 +225,7 @@ namespace Movie_Ticket_Booking_System.Controllers
                         Id = item.Id,
                         isReserved = item.isReserved,
                         seatRow = item.seatRow,
+                        PayWay = option,
                         ShowId = item.ShowId,
                         BookingNumber = item.BookingNumber
                     });
@@ -235,7 +243,9 @@ namespace Movie_Ticket_Booking_System.Controllers
         [HttpPost]
         public ActionResult FrontEndOffice(FrontEndOfficer frontEnd)
         {
-           
+            BankFactory bankFactory = new BankFactory();
+            IBank bank = bankFactory.GetBank(frontEnd.PayWay);
+            bank.withDraw();
             frontEnd.BookingNumber = frontEnd.Id.ToString();
             var author = _context.ShowSeat.Where(a => a.seatRow == frontEnd.seatRow && a.ShowId == frontEnd.ShowId).Single();
             author.BookingNumber = frontEnd.BookingNumber;

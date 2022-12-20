@@ -11,7 +11,7 @@ namespace Movie_Ticket_Booking_System.Models
         [Key]
         public int Id { get; set; }
         public int seatRow { get; set; }
-        public int seatColum { get; set; }
+        public string PayWay { get; set; }
         public bool isReserved { get; set; }
         public string BookingNumber { get; set; }
         public DateTime? createdOn { get; set; }
