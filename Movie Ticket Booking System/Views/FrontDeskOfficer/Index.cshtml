@@ -8,9 +8,6 @@
 <h2>FrontEndOffice</h2>
 @using (Html.BeginForm())
 {
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
     <table class="table">
         <tr>
             <th>
@@ -61,7 +58,6 @@
         </td>
         <td>
             @Html.ActionLink("Cancel", "CancelSeat",new { id = item.Id})
-            @*<input type="submit" value="Cancel" class="btn btn-default" />*@
         </td>
     </tr>
 

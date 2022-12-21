@@ -169,6 +169,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\FrontDeskOfficerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\UserController.cs" />
@@ -323,7 +324,7 @@
     <Content Include="Views\User\Index.cshtml" />
     <Content Include="Views\User\Details.cshtml" />
     <Content Include="Views\User\DetailsShow.cshtml" />
-    <Content Include="Views\User\FrontEndOffice.cshtml" />
+    <Content Include="Views\FrontDeskOfficer\Index.cshtml" />
     <Content Include="Views\Admin\CreateCity.cshtml" />
     <Content Include="Views\Admin\DeleteCity.cshtml" />
     <Content Include="Views\Admin\DetailsCity.cshtml" />

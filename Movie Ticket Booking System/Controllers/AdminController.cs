@@ -41,7 +41,6 @@ namespace Movie_Ticket_Booking_System.Controllers
             return View(movieDetails);
         }
 
-        // GET: MovieDetails/EditMovies/5
         public ActionResult EditMovies(int? id)
         {
             if (id == null)
@@ -56,9 +55,6 @@ namespace Movie_Ticket_Booking_System.Controllers
             return View(movieDetails);
         }
 
-        // POST: MovieDetails/EditMovies/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditMovies([Bind(Include = "Id,MovieName,MovieDescription,durationMinutes,Language,DateAndTime,Country,genre,MoviePicture")] MovieDetails movieDetails)
@@ -72,7 +68,6 @@ namespace Movie_Ticket_Booking_System.Controllers
             return View(movieDetails);
         }
 
-        // GET: MovieDetails/DeleteMovies/5
         public ActionResult DeleteMovies(int? id)
         {
             if (id == null)
@@ -171,9 +166,6 @@ namespace Movie_Ticket_Booking_System.Controllers
             return View(show);
         }
 
-        // POST: Shows/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditShow([Bind(Include = "ID,createOn,startTime,endDate,HallId,MovieId")] Show show)
@@ -189,7 +181,6 @@ namespace Movie_Ticket_Booking_System.Controllers
             return View(show);
         }
 
-        // GET: Shows/Delete/5
         public ActionResult DeleteShow(int? id)
         {
             if (id == null)
@@ -204,7 +195,6 @@ namespace Movie_Ticket_Booking_System.Controllers
             return View(show);
         }
 
-        // POST: Shows/Delete/5
         [HttpPost, ActionName("DeleteShow")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteShowConfirmed(int id)
@@ -215,13 +205,11 @@ namespace Movie_Ticket_Booking_System.Controllers
             return RedirectToAction("IndexShow");
         }
 
-        // GET: Cities
         public ActionResult IndexCity()
         {
             return View(_context.cities.ToList());
         }
 
-        // GET: Cities/Details/5
         public ActionResult DetailsCity(int? id)
         {
             if (id == null)
@@ -236,15 +224,11 @@ namespace Movie_Ticket_Booking_System.Controllers
             return View(city);
         }
 
-        // GET: Cities/Create
         public ActionResult CreateCity()
         {
             return View();
         }
 
-        // POST: Cities/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateCity([Bind(Include = "Id,Name")] City city)
@@ -259,7 +243,6 @@ namespace Movie_Ticket_Booking_System.Controllers
             return View(city);
         }
 
-        // GET: Cities/Edit/5
         public ActionResult EditCity(int? id)
         {
             if (id == null)
@@ -274,9 +257,6 @@ namespace Movie_Ticket_Booking_System.Controllers
             return View(city);
         }
 
-        // POST: Cities/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditCity([Bind(Include = "Id,Name")] City city)
@@ -290,7 +270,6 @@ namespace Movie_Ticket_Booking_System.Controllers
             return View(city);
         }
 
-        // GET: Cities/Delete/5
         public ActionResult DeleteCity(int? id)
         {
             if (id == null)
@@ -305,7 +284,6 @@ namespace Movie_Ticket_Booking_System.Controllers
             return View(city);
         }
 
-        // POST: Cities/Delete/5
         [HttpPost, ActionName("DeleteCity")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmedCity(int id)
@@ -316,14 +294,12 @@ namespace Movie_Ticket_Booking_System.Controllers
             return RedirectToAction("IndexCity");
         }
 
-        // GET: Cinemas
         public ActionResult IndexCinema()
         {
             var cinemas = _context.Cinemas.Include(c => c.City);
             return View(cinemas.ToList());
         }
 
-        // GET: Cinemas/Details/5
         public ActionResult DetailsCinema(int? id)
         {
             if (id == null)
@@ -338,7 +314,6 @@ namespace Movie_Ticket_Booking_System.Controllers
             return View(cinema);
         }
 
-        // GET: Cinemas/Create
         public ActionResult CreateCinema()
         {
             ViewBag.CityId = new SelectList(_context.cities, "Id", "Name");
@@ -349,9 +324,6 @@ namespace Movie_Ticket_Booking_System.Controllers
         /// </summary>
         /// <param name="cinema"></param>
         /// <returns></returns>
-        // POST: Cinemas/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateCinema([Bind(Include = "Id,CinemaName,CityId,totalHalls")] Cinema cinema)
@@ -359,7 +331,6 @@ namespace Movie_Ticket_Booking_System.Controllers
             if (ModelState.IsValid)
             {
                 _context.Cinemas.Add(cinema);
-                //var x = db..Where(y => y.Id == show.HallId).Single();
                 int g = cinema.totalHalls;
                 int HallNum = 1;
                 string CinemaName = cinema.CinemaName;
@@ -381,7 +352,6 @@ namespace Movie_Ticket_Booking_System.Controllers
             return View(cinema);
         }
 
-        // GET: Cinemas/Edit/5
         public ActionResult EditCinema(int? id)
         {
             if (id == null)
@@ -397,9 +367,6 @@ namespace Movie_Ticket_Booking_System.Controllers
             return View(cinema);
         }
 
-        // POST: Cinemas/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditCinema([Bind(Include = "Id,CinemaName,CityId,totalHalls")] Cinema cinema)
@@ -414,7 +381,6 @@ namespace Movie_Ticket_Booking_System.Controllers
             return View(cinema);
         }
 
-        // GET: Cinemas/Delete/5
         public ActionResult DeleteCinema(int? id)
         {
             if (id == null)
@@ -429,7 +395,6 @@ namespace Movie_Ticket_Booking_System.Controllers
             return View(cinema);
         }
 
-        // POST: Cinemas/Delete/5
         [HttpPost, ActionName("DeleteCinema")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteCinemaConfirmed(int id)
@@ -439,6 +404,5 @@ namespace Movie_Ticket_Booking_System.Controllers
             _context.SaveChanges();
             return RedirectToAction("IndexCinema");
         }
-
     }
 }
