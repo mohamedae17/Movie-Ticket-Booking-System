@@ -36,30 +36,34 @@
 
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Show.ID)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.seatRow)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.PayWay)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.isReserved)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BookingNumber)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.createdOn)
-                </td>
-                <td>
-                    @Html.HiddenFor(modelItem => item.Id)
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </td>
-            </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Show.ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.seatRow)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PayWay)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.isReserved)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BookingNumber)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.createdOn)
+        </td>
+        <td>
+            @Html.HiddenFor(modelItem => item.Id)
+            <input type="submit" value="Book" class="btn btn-default" />
+        </td>
+        <td>
+            @Html.ActionLink("Cancel", "CancelSeat",new { id = item.Id})
+            @*<input type="submit" value="Cancel" class="btn btn-default" />*@
+        </td>
+    </tr>
 
         }
 
@@ -69,6 +73,7 @@
             @Html.HiddenFor(modelItem => Model.ElementAt(i).isReserved)
             @Html.HiddenFor(modelItem => Model.ElementAt(i).seatRow)
             @Html.HiddenFor(modelItem => Model.ElementAt(i).PayWay)
+            @Html.HiddenFor(modelItem => Model.ElementAt(i).Coupon)
             @Html.HiddenFor(modelItem => Model.ElementAt(i).ShowId)
         }
 
