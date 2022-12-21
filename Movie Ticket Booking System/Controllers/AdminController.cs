@@ -112,8 +112,133 @@ namespace Movie_Ticket_Booking_System.Controllers
             _context.SaveChanges();
             return RedirectToAction("IndexMovies");
         }
+
         /// <summary>
-        /// 
+        /// List Of Cities & Create & Delete it
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult IndexCity()
+        {
+            return View(_context.cities.ToList());
+        }
+
+        public ActionResult CreateCity()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateCity([Bind(Include = "Id,Name")] City city)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.cities.Add(city);
+                _context.SaveChanges();
+                return RedirectToAction("IndexCity");
+            }
+
+            return View(city);
+        }
+
+        public ActionResult DeleteCity(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            City city = _context.cities.Find(id);
+            if (city == null)
+            {
+                return HttpNotFound();
+            }
+            return View(city);
+        }
+
+        [HttpPost, ActionName("DeleteCity")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmedCity(int id)
+        {
+            City city = _context.cities.Find(id);
+            _context.cities.Remove(city);
+            _context.SaveChanges();
+            return RedirectToAction("IndexCity");
+        }
+
+        /// <summary>
+        /// List Of Cinemas and Create & addShow & Delete
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult IndexCinema()
+        {
+            var cinemas = _context.Cinemas.Include(c => c.City);
+            return View(cinemas.ToList());
+        }
+
+        public ActionResult CreateCinema()
+        {
+            ViewBag.CityId = new SelectList(_context.cities, "Id", "Name");
+            return View();
+        }
+        /// <summary>
+        /// Require 2 : Each cinema can have multiple halls 
+        /// </summary>
+        /// <param name="cinema"></param>
+        /// <returns></returns>
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateCinema([Bind(Include = "Id,CinemaName,CityId,totalHalls")] Cinema cinema)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Cinemas.Add(cinema);
+                int g = cinema.totalHalls;
+                int HallNum = 1;
+                string CinemaName = cinema.CinemaName;
+                for (int i = 0; i < g; i++)
+                {
+                    _context.Halls.Add(new Halls()
+                    {
+                        Name = "Hall " + (HallNum++)+"-" + CinemaName,
+                        totalSeats = 10,
+                        CinemaId = cinema.Id
+                    });
+                    _context.SaveChanges();
+                }
+                _context.SaveChanges();
+                return RedirectToAction("IndexCinema");
+            }
+
+            ViewBag.CityId = new SelectList(_context.cities, "Id", "Name", cinema.CityId);
+            return View(cinema);
+        }
+
+        public ActionResult DeleteCinema(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Cinema cinema = _context.Cinemas.Find(id);
+            if (cinema == null)
+            {
+                return HttpNotFound();
+            }
+            return View(cinema);
+        }
+
+        [HttpPost, ActionName("DeleteCinema")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteCinemaConfirmed(int id)
+        {
+            Cinema cinema = _context.Cinemas.Find(id);
+            _context.Cinemas.Remove(cinema);
+            _context.SaveChanges();
+            return RedirectToAction("IndexCinema");
+        }
+
+        /// <summary>
+        /// List Of Shows & Create & Edit & Delete it
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -124,9 +249,9 @@ namespace Movie_Ticket_Booking_System.Controllers
         }
 
         [HttpGet]
-        public ActionResult CreateShow(int CinemaId)
+        public ActionResult CreateShow(int? CinemaId)
         {
-            ViewBag.HallId = new SelectList(_context.Halls.Where(a=>a.CinemaId == CinemaId), "Id", "Name");
+            ViewBag.HallId = new SelectList(_context.Halls.Where(a => a.CinemaId == CinemaId), "Id", "Name");
             ViewBag.MovieId = new SelectList(_context.MovieDetails, "Id", "MovieName");
             return View();
         }
@@ -143,28 +268,28 @@ namespace Movie_Ticket_Booking_System.Controllers
         {
             if (ModelState.IsValid)
             {
-                if(_context.Shows.Any(x=>x.HallId == show.HallId && x.startTime == show.startTime))
+                if (_context.Shows.Any(x => x.HallId == show.HallId && x.startTime == show.startTime))
                 {
-                    return RedirectToAction("IndexShow");
+                    return Content("<script language='javascript' type='text/javascript'>alert('Time Not available');</script>");
                 }
                 else
                 {
-                _context.Shows.Add(show);
+                    _context.Shows.Add(show);
                     var x = _context.Halls.Where(y => y.Id == show.HallId).Single();
                     int g = x.totalSeats;
-                    
-                    for(int i = 0; i < g; i++)
+
+                    for (int i = 0; i < g; i++)
                     {
                         _context.ShowSeat.Add(new ShowSeat()
                         {
                             ShowId = show.ID,
                             createdOn = DateTime.Now,
                             seatRow = i
-                        }) ;
+                        });
                         _context.SaveChanges();
                     }
-                _context.SaveChanges();
-                return RedirectToAction("IndexShow");
+                    _context.SaveChanges();
+                    return RedirectToAction("IndexShow");
                 }
             }
 
@@ -226,206 +351,6 @@ namespace Movie_Ticket_Booking_System.Controllers
             _context.Shows.Remove(show);
             _context.SaveChanges();
             return RedirectToAction("IndexShow");
-        }
-
-        public ActionResult IndexCity()
-        {
-            return View(_context.cities.ToList());
-        }
-
-        public ActionResult DetailsCity(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            City city = _context.cities.Find(id);
-            if (city == null)
-            {
-                return HttpNotFound();
-            }
-            return View(city);
-        }
-
-        public ActionResult CreateCity()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateCity([Bind(Include = "Id,Name")] City city)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.cities.Add(city);
-                _context.SaveChanges();
-                return RedirectToAction("IndexCity");
-            }
-
-            return View(city);
-        }
-
-        public ActionResult EditCity(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            City city = _context.cities.Find(id);
-            if (city == null)
-            {
-                return HttpNotFound();
-            }
-            return View(city);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult EditCity([Bind(Include = "Id,Name")] City city)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Entry(city).State = EntityState.Modified;
-                _context.SaveChanges();
-                return RedirectToAction("IndexCity");
-            }
-            return View(city);
-        }
-
-        public ActionResult DeleteCity(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            City city = _context.cities.Find(id);
-            if (city == null)
-            {
-                return HttpNotFound();
-            }
-            return View(city);
-        }
-
-        [HttpPost, ActionName("DeleteCity")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmedCity(int id)
-        {
-            City city = _context.cities.Find(id);
-            _context.cities.Remove(city);
-            _context.SaveChanges();
-            return RedirectToAction("IndexCity");
-        }
-
-        public ActionResult IndexCinema()
-        {
-            var cinemas = _context.Cinemas.Include(c => c.City);
-            return View(cinemas.ToList());
-        }
-
-        public ActionResult DetailsCinema(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Cinema cinema = _context.Cinemas.Find(id);
-            if (cinema == null)
-            {
-                return HttpNotFound();
-            }
-            return View(cinema);
-        }
-
-        public ActionResult CreateCinema()
-        {
-            ViewBag.CityId = new SelectList(_context.cities, "Id", "Name");
-            return View();
-        }
-        /// <summary>
-        /// Require 2 : Each cinema can have multiple halls 
-        /// </summary>
-        /// <param name="cinema"></param>
-        /// <returns></returns>
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateCinema([Bind(Include = "Id,CinemaName,CityId,totalHalls")] Cinema cinema)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Cinemas.Add(cinema);
-                int g = cinema.totalHalls;
-                int HallNum = 1;
-                string CinemaName = cinema.CinemaName;
-                for (int i = 0; i < g; i++)
-                {
-                    _context.Halls.Add(new Halls()
-                    {
-                        Name = "Hall " + (HallNum++)+"-" + CinemaName,
-                        totalSeats = 10,
-                        CinemaId = cinema.Id
-                    });
-                    _context.SaveChanges();
-                }
-                _context.SaveChanges();
-                return RedirectToAction("IndexCinema");
-            }
-
-            ViewBag.CityId = new SelectList(_context.cities, "Id", "Name", cinema.CityId);
-            return View(cinema);
-        }
-
-        public ActionResult EditCinema(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Cinema cinema = _context.Cinemas.Find(id);
-            if (cinema == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.CityId = new SelectList(_context.cities, "Id", "Name", cinema.CityId);
-            return View(cinema);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult EditCinema([Bind(Include = "Id,CinemaName,CityId,totalHalls")] Cinema cinema)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Entry(cinema).State = EntityState.Modified;
-                _context.SaveChanges();
-                return RedirectToAction("IndexCinema");
-            }
-            ViewBag.CityId = new SelectList(_context.cities, "Id", "Name", cinema.CityId);
-            return View(cinema);
-        }
-
-        public ActionResult DeleteCinema(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Cinema cinema = _context.Cinemas.Find(id);
-            if (cinema == null)
-            {
-                return HttpNotFound();
-            }
-            return View(cinema);
-        }
-
-        [HttpPost, ActionName("DeleteCinema")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteCinemaConfirmed(int id)
-        {
-            Cinema cinema = _context.Cinemas.Find(id);
-            _context.Cinemas.Remove(cinema);
-            _context.SaveChanges();
-            return RedirectToAction("IndexCinema");
         }
     }
 }
