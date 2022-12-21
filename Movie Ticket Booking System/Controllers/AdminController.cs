@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Data.Entity;
 using System.Net;
+using System.IO;
 
 namespace Movie_Ticket_Booking_System.Controllers
 {
@@ -17,25 +18,45 @@ namespace Movie_Ticket_Booking_System.Controllers
             this._context = new ApplicationDbContext();
         }
         // GET: Admin
+        /// <summary>
+        /// List Of Movies & Create & Edit & Delete it
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        public ActionResult Index()
+        public ActionResult IndexMovies()
         {
             return View(_context.MovieDetails.ToList());
         }
+        public ActionResult DetailsMovies(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            MovieDetails movieDetails = _context.MovieDetails.Find(id);
+            if (movieDetails == null)
+            {
+                return HttpNotFound();
+            }
+            return View(movieDetails);
+        }
         [HttpGet]
-        public ActionResult Create()
+        public ActionResult CreateMovies()
         {
             return View();
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create( MovieDetails movieDetails)
+        public ActionResult CreateMovies( MovieDetails movieDetails,HttpPostedFileBase Uploads)
         {
             if (ModelState.IsValid)
             {
+                string path = Path.Combine(Server.MapPath("~/Uploads"),Uploads.FileName);
+                Uploads.SaveAs(path);
+                movieDetails.MoviePicture = Uploads.FileName;
                 _context.MovieDetails.Add(movieDetails);
                 _context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("IndexMovies");
             }
 
             return View(movieDetails);
@@ -63,7 +84,7 @@ namespace Movie_Ticket_Booking_System.Controllers
             {
                 _context.Entry(movieDetails).State = EntityState.Modified;
                 _context.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("IndexMovies");
             }
             return View(movieDetails);
         }
@@ -82,7 +103,6 @@ namespace Movie_Ticket_Booking_System.Controllers
             return View(movieDetails);
         }
 
-       
         [HttpPost, ActionName("DeleteMovies")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
@@ -90,9 +110,12 @@ namespace Movie_Ticket_Booking_System.Controllers
             MovieDetails movieDetails = _context.MovieDetails.Find(id);
             _context.MovieDetails.Remove(movieDetails);
             _context.SaveChanges();
-            return RedirectToAction("Index");
+            return RedirectToAction("IndexMovies");
         }
-
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
         public ActionResult IndexShow()
         {

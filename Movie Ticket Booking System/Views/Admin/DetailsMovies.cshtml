@@ -1,13 +1,12 @@
 ﻿@model Movie_Ticket_Booking_System.Models.MovieDetails
 
 @{
-    ViewBag.Title = "DeleteMovies";
+    ViewBag.Title = "DetailsMovies";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>DeleteMovies</h2>
+<h2>DetailsMovies</h2>
 
-<h3>Are you sure you want to delete this?</h3>
 <div>
     <h4>MovieDetails</h4>
     <hr />
@@ -73,17 +72,12 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.MoviePicture)
+            <img src="~/Uploads/@Html.DisplayFor(model=>model.MoviePicture)"
         </dd>
 
     </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "IndexMovies")
-        </div>
-    }
 </div>
+<p>
+    @Html.ActionLink("Edit", "EditMovies", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "IndexMovies")
+</p>
