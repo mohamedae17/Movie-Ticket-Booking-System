@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace Movie_Ticket_Booking_System.Controllers
 {
+    [Authorize(Roles = "Front Desk Officer")]
     public class FrontDeskOfficerController : Controller
     {
         private ApplicationDbContext _context;
@@ -29,7 +30,7 @@ namespace Movie_Ticket_Booking_System.Controllers
             var author = _context.ShowSeat.Where(a => a.seatRow == frontEnd.seatRow && a.ShowId == frontEnd.ShowId).Single();
             if (author.isReserved == false)
             {
-                author.BookingNumber = frontEnd.BookingNumber;
+                author.BookingNumber = frontEnd.user.Id;
                 author.isReserved = frontEnd.isReserved;
                 _context.Entry(author).State = EntityState.Modified;
                 IBank bank = bankFactory.GetBank(frontEnd.PayWay);

@@ -17,9 +17,10 @@ namespace Movie_Ticket_Booking_System.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
-
+        private ApplicationDbContext dbContext;
         public AccountController()
         {
+            dbContext = new ApplicationDbContext();
         }
 
         public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
@@ -76,6 +77,10 @@ namespace Movie_Ticket_Booking_System.Controllers
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
             var result = await SignInManager.PasswordSignInAsync(model.username, model.Password, model.RememberMe, shouldLockout: false);
+            if (dbContext.Users.Where(a => a.UserName == model.username).Single().PhoneNumber == "1")
+            {
+                return Content("You are Blocked");
+            }
             switch (result)
             {
                 case SignInStatus.Success:
@@ -156,13 +161,14 @@ namespace Movie_Ticket_Booking_System.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
+                    //string x = dbContext.Roles.ElementAt(0).Name.ToString();
+                    await UserManager.AddToRoleAsync(user.Id, "User");
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);

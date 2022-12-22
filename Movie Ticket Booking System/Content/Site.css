@@ -4,13 +4,14 @@
 }
 
 body {
-    margin: 0;
-    background-image: url(https://www.nti-audio.com/portals/0/pics/en/Teaser-Cinema-1200-500.jpg);
-    backdrop-filter: blur(10px);
-    background-attachment: fixed;
-    background-size: cover;
-    font-family: helvetica;
+    background: #00C9FF;
+    background: -webkit-linear-gradient(to right, #92FE9D, #00C9FF);
+    background: -webkit-gradient(linear, left top, right top, from(#92FE9D), to(#00C9FF));
+    background: -webkit-linear-gradient(left, #92FE9D, #00C9FF);
+    background: -o-linear-gradient(left, #92FE9D, #00C9FF);
+    background: linear-gradient(to right, #92FE9D, #00C9FF);
 }
+
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;

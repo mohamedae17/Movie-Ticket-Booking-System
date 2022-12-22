@@ -15,6 +15,8 @@ namespace Movie_Ticket_Booking_System.Models
         public string Coupon { get; set; }
         public bool isReserved { get; set; }
         public string BookingNumber { get; set; }
+        public string UserId { get; set; }
+        public virtual ApplicationUser user { get; set; }
         public DateTime? createdOn { get; set; }
         public int ShowId { get; set; }
         public Show Show { get; set; }

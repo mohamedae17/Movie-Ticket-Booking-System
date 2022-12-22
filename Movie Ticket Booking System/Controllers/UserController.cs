@@ -9,9 +9,11 @@ using Movie_Ticket_Booking_System.ViewModels;
 using System.Net;
 using System.Net.Mail;
 using Movie_Ticket_Booking_System.Payments;
+using Microsoft.AspNet.Identity;
 
 namespace Movie_Ticket_Booking_System.Controllers
 {
+    [Authorize]
     public class UserController : Controller
     {
         private ApplicationDbContext _context;
@@ -27,6 +29,7 @@ namespace Movie_Ticket_Booking_System.Controllers
         /// <param name="search">String in Serach text box</param>
         /// <returns></returns>
         // GET: User
+        [AllowAnonymous]
         public ActionResult Index(string option, string search)
         {
             List<CinemasInCities> list = new List<CinemasInCities>();
@@ -80,8 +83,11 @@ namespace Movie_Ticket_Booking_System.Controllers
                     List<Show> shows = new List<Show>();
                     foreach (var Hall in Halls)
                     {
-                        var ShowList = _context.Shows.Where(s => s.HallId == Hall.Id).DefaultIfEmpty().Single();
-                        shows.Add(ShowList);
+                        var ShowList = _context.Shows.Where(s => s.HallId == Hall.Id).ToList();
+                        foreach (var s in ShowList)
+                        {
+                            shows.Add(s);
+                        }
                     }
                     foreach (var show in shows)
                     {
@@ -147,6 +153,7 @@ namespace Movie_Ticket_Booking_System.Controllers
             return View(list);
         }
         // GET: MovieDetails/Details/5
+
         public ActionResult Details(int? id)
         {
             MovieWithShows movieWithShows = new MovieWithShows();
@@ -164,7 +171,8 @@ namespace Movie_Ticket_Booking_System.Controllers
 
             return View(movieWithShows);
         }
-       
+
+
         [HttpGet]
         public ActionResult DetailsShow(int? id)
         {
@@ -191,6 +199,7 @@ namespace Movie_Ticket_Booking_System.Controllers
             }
             return View(bookNow);
         }
+
         [HttpPost]
         public ActionResult DetailsShow(BookNowView bookNow,string option,string Coupon)
         {
@@ -204,12 +213,13 @@ namespace Movie_Ticket_Booking_System.Controllers
                         Id = item.Id,
                         isReserved = item.isReserved,
                         seatRow = item.seatRow,
+                        UserId = User.Identity.GetUserId(),
                         PayWay = option,
                         ShowId = item.ShowId,
                         Coupon = Coupon,
                         createdOn = DateTime.Now,
                         BookingNumber = item.BookingNumber
-                    }) ;
+                    });
                     _context.SaveChanges();
                 }
             }

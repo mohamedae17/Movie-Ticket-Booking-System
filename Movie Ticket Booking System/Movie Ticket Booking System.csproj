@@ -172,6 +172,7 @@
     <Compile Include="Controllers\FrontDeskOfficerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -232,6 +233,10 @@
     <Compile Include="Migrations\202212211225071_coupon.Designer.cs">
       <DependentUpon>202212211225071_coupon.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202212222256465_UserId.cs" />
+    <Compile Include="Migrations\202212222256465_UserId.Designer.cs">
+      <DependentUpon>202212222256465_UserId.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Cinema.cs" />
@@ -255,6 +260,7 @@
     <Compile Include="ViewModels\CinemasInCities.cs" />
     <Compile Include="ViewModels\Movieslist.cs" />
     <Compile Include="ViewModels\MovieWithShows.cs" />
+    <Compile Include="ViewModels\RolesViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-theme.css" />
@@ -332,6 +338,11 @@
     <Content Include="Views\Admin\DeleteCinema.cshtml" />
     <Content Include="Views\Admin\IndexCinema.cshtml" />
     <Content Include="Views\Admin\DetailsMovies.cshtml" />
+    <Content Include="Views\Roles\Index.cshtml" />
+    <Content Include="Views\Roles\Create.cshtml" />
+    <Content Include="Views\Roles\Details.cshtml" />
+    <Content Include="Views\Roles\Edit.cshtml" />
+    <Content Include="Views\Roles\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -392,6 +403,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202212211225071_coupon.resx">
       <DependentUpon>202212211225071_coupon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202212222256465_UserId.resx">
+      <DependentUpon>202212222256465_UserId.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

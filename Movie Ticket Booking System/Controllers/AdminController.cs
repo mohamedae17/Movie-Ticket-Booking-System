@@ -10,6 +10,7 @@ using System.IO;
 
 namespace Movie_Ticket_Booking_System.Controllers
 {
+    [Authorize(Roles = "Administrators")]
     public class AdminController : Controller
     {
         private ApplicationDbContext _context;
@@ -18,6 +19,58 @@ namespace Movie_Ticket_Booking_System.Controllers
             this._context = new ApplicationDbContext();
         }
         // GET: Admin
+
+        /// <summary>
+        /// List Of Cities & Create & Delete it
+        /// </summary>
+        /// <returns></returns>
+        public ActionResult IndexCity()
+        {
+            return View(_context.cities.ToList());
+        }
+
+        public ActionResult CreateCity()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateCity([Bind(Include = "Id,Name")] City city)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.cities.Add(city);
+                _context.SaveChanges();
+                return RedirectToAction("IndexCity");
+            }
+
+            return View(city);
+        }
+
+        public ActionResult DeleteCity(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            City city = _context.cities.Find(id);
+            if (city == null)
+            {
+                return HttpNotFound();
+            }
+            return View(city);
+        }
+
+        [HttpPost, ActionName("DeleteCity")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmedCity(int id)
+        {
+            City city = _context.cities.Find(id);
+            _context.cities.Remove(city);
+            _context.SaveChanges();
+            return RedirectToAction("IndexCity");
+        }
         /// <summary>
         /// List Of Movies & Create & Edit & Delete it
         /// </summary>
@@ -111,58 +164,6 @@ namespace Movie_Ticket_Booking_System.Controllers
             _context.MovieDetails.Remove(movieDetails);
             _context.SaveChanges();
             return RedirectToAction("IndexMovies");
-        }
-
-        /// <summary>
-        /// List Of Cities & Create & Delete it
-        /// </summary>
-        /// <returns></returns>
-        public ActionResult IndexCity()
-        {
-            return View(_context.cities.ToList());
-        }
-
-        public ActionResult CreateCity()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult CreateCity([Bind(Include = "Id,Name")] City city)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.cities.Add(city);
-                _context.SaveChanges();
-                return RedirectToAction("IndexCity");
-            }
-
-            return View(city);
-        }
-
-        public ActionResult DeleteCity(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            City city = _context.cities.Find(id);
-            if (city == null)
-            {
-                return HttpNotFound();
-            }
-            return View(city);
-        }
-
-        [HttpPost, ActionName("DeleteCity")]
-        [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmedCity(int id)
-        {
-            City city = _context.cities.Find(id);
-            _context.cities.Remove(city);
-            _context.SaveChanges();
-            return RedirectToAction("IndexCity");
         }
 
         /// <summary>

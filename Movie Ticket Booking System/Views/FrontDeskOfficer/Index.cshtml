@@ -21,7 +21,7 @@
     <table class="table">
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Show.ID)
+                @Html.DisplayNameFor(model => model.UserId)
             </th>
             <th>
                 Seat Number
@@ -45,7 +45,7 @@
         {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.Show.ID)
+            @Html.DisplayFor(modelItem => item.user.UserName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.seatRow)
@@ -84,6 +84,8 @@
         {
             @Html.HiddenFor(modelItem => Model.ElementAt(i).Id)
             @Html.HiddenFor(modelItem => Model.ElementAt(i).isReserved)
+            @Html.HiddenFor(modelItem => Model.ElementAt(i).UserId)
+            @Html.HiddenFor(modelItem => Model.ElementAt(i).user.UserName)
             @Html.HiddenFor(modelItem => Model.ElementAt(i).seatRow)
             @Html.HiddenFor(modelItem => Model.ElementAt(i).PayWay)
             @Html.HiddenFor(modelItem => Model.ElementAt(i).Coupon)
