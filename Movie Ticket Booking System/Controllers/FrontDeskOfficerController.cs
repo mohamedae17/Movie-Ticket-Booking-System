@@ -21,9 +21,9 @@ namespace Movie_Ticket_Booking_System.Controllers
         {
             return View(_context.frontEndOfficers.ToList());
         }
-        [HttpPost]
-        public ActionResult Index(FrontEndOfficer frontEnd)
+        public ActionResult Book(int id)
         {
+            FrontEndOfficer frontEnd = _context.frontEndOfficers.Find(id);
             BankFactory bankFactory = new BankFactory();
             frontEnd.BookingNumber = frontEnd.Id.ToString();
             var author = _context.ShowSeat.Where(a => a.seatRow == frontEnd.seatRow && a.ShowId == frontEnd.ShowId).Single();
@@ -39,7 +39,7 @@ namespace Movie_Ticket_Booking_System.Controllers
                 }
                 else
                 {
-                    bank.withDraw();
+             //       bank.withDraw();
                 }
             }
             else
@@ -49,13 +49,13 @@ namespace Movie_Ticket_Booking_System.Controllers
             _context.frontEndOfficers.Remove(_context.frontEndOfficers.Find(frontEnd.Id));
             _context.SaveChanges();
 
-            return View(_context.frontEndOfficers.ToList());
+            return RedirectToAction("Index");
         }
         public ActionResult CancelSeat(int id)
         {
             _context.frontEndOfficers.Remove(_context.frontEndOfficers.Find(id));
             _context.SaveChanges();
-            return Content("Cancelled");
+            return RedirectToAction("Index");
         }
     }
 }

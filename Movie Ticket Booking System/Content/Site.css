@@ -1,8 +1,16 @@
 ﻿body {
-    padding-top: 50px;
+    padding-top: 100px;
     padding-bottom: 20px;
 }
 
+body {
+    margin: 0;
+    background-image: url(https://www.nti-audio.com/portals/0/pics/en/Teaser-Cinema-1200-500.jpg);
+    backdrop-filter: blur(10px);
+    background-attachment: fixed;
+    background-size: cover;
+    font-family: helvetica;
+}
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;

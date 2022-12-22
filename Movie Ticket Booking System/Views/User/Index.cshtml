@@ -4,24 +4,99 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<style>
+
+    .box-filmes {
+        text-align: center;
+        border: solid 1px rgb(255, 255, 255, 0.3);
+        width: 232px;
+        margin: 10px;
+        background-color: rgb(0, 0, 0, 0.3);
+    }
+
+        .box-filmes:hover {
+            border: 1px solid #fff;
+            transform: scale(1.05);
+            box-shadow: 0px 0px 5px 0px #fff;
+        }
+
+    .capas-filmes {
+        width: 230px;
+        height: 330px;
+    }
+
+    a,form {
+        color: #fff;
+    }
+    a:hover {
+        color: #fff;
+        text-decoration:none;
+    }
+
+    .div-filmes {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    .searching {
+        display: flex;
+        justify-content: center;
+        margin:10px;
+    }
+    input[type="radio"], input[type="checkbox"] {
+        margin: -12px 14px 0px;
+    }
+    text, .boxSearch {
+        margin-right: 5px;
+    }
+    .intro {
+        font-family: "Montserrat", sans-serif;
+        color: white;
+        padding: 2em;
+        background-color: #25a9df;
+        /*margin-bottom: 1em;*/
+        letter-spacing: 1px;
+    }
+    .cinema {
+        font-family: "Montserrat", sans-serif;
+        color: #fff;
+        padding: 2em;
+        background-color: #757374;
+        margin-bottom: 1em;
+        letter-spacing: 1px;
+    }
+</style>
+
 @using (Html.BeginForm("Index", "User", FormMethod.Get))
 {
+<div class="searching">
+    <b> Search Option: </b>
+    @Html.RadioButton("option", "Title") <text>Title</text>
+    @Html.RadioButton("option", "Genere") <text> Genere </text>
+    @Html.RadioButton("option", "Language")<text>Language</text>
+    @Html.RadioButton("option", "ReleaseDate")<text>Release Date</text>
+    @Html.RadioButton("option", "CityName")<text>City Name</text>
+    @Html.TextBox("search", null, new { @class = "form-control boxSearch", placeholder = "Find what you want..." })
+    <input type="submit" name="submit" class="btn-primary" value="Search" />
+</div>
     int i = 0;
-    <ul>
-        @foreach (var movie in Model.ToList())
-        {
-            if (i == 0)
+    foreach (var movie in Model.ToList())
+    {
+        <div class="intro">
+            @if (i == 0)
             {
                 @movie.city
+                <br />
             }
             else if (Model.ElementAt(i).city != Model.ElementAt(i - 1).city)
             {
                 @movie.city
 
-            <br />
+                <br />
             }
-            if (movie.cinema == null)
+        </div>
+        <div class="cinema">
+            @if (movie.cinema == null)
             {
 
             }
@@ -29,28 +104,23 @@
             {
                 @movie.cinema.CinemaName
             }
-            if (movie.movieDetails != null)
+        </div>
+        <div class="div-filmes">
+            @if (movie.movieDetails != null)
             {
                 foreach (var card in movie.movieDetails)
                 {
-                    <li> <a href="~/User/Details/@card.Id"> @card.MovieName </a></li>
-                    <li> @card.Language</li>
-                    <li> @card.genre</li>
-                    <li> @card.RleaseDate</li>
-                    <li> @card.Country</li>
+                    <div class="box-filmes">
+                        <a href="~/User/Details/@card.Id">
+                            <img src="~/Uploads/@Html.DisplayFor(modelItem => card.MoviePicture)" class="capas-filmes" />
+                            <p> @card.MovieName </p>
+                        </a>
+                    </div>
                 }
-            <br />
+                <br />
             }
-            i++;
-        }
+        </div>
+        i++;
+    }
 
-    </ul>
-    <b> Search Option: </b>
-    @Html.RadioButton("option", "Title") <text>Title</text>
-    @Html.RadioButton("option", "Genere") <text> Genere </text>
-    @Html.RadioButton("option", "Language")<text>Language</text>
-    @Html.RadioButton("option", "ReleaseDate")<text>Release Date</text>
-    @Html.RadioButton("option", "CityName")<text>City Name</text>
-    @Html.TextBox("search")
-    <input type="submit" name="submit" value="Search" />
 }

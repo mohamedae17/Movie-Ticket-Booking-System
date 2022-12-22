@@ -5,86 +5,151 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Details</h2>
+<style>
 
-<div>
-    <h4>MovieDetails</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.movieDetails.MovieName)
-        </dt>
+    .main_card {
+        color: #fff;
+        width: 760px;
+        margin: 50px auto;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        max-width: 770px;
+        background: #00C9FF;
+        background: -webkit-linear-gradient(to right, #92FE9D, #00C9FF);
+        background: -webkit-gradient(linear, left top, right top, from(#92FE9D), to(#00C9FF));
+        background: -webkit-linear-gradient(left, #92FE9D, #00C9FF);
+        background: -o-linear-gradient(left, #92FE9D, #00C9FF);
+        background: linear-gradient(to right, #92FE9D, #00C9FF);
+        -webkit-box-shadow: 0 0 40px rgba(0,0,0,0.3);
+        box-shadow: 0 0 40px rgba(0,0,0,0.3);
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.movieDetails.MovieName)
-        </dd>
+    .card_left {
+        width: 90%;
+    }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.movieDetails.MovieDescription)
-        </dt>
+    .card_datails {
+        width: 90%;
+        padding: 30px;
+        margin-top: -25px;
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.movieDetails.MovieDescription)
-        </dd>
+        .card_datails h1 {
+            font-size: 30px;
+        }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.movieDetails.durationMinutes)
-        </dt>
+    .card_right img {
+        height: 390px;
+        border-radius: 2px;
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.movieDetails.durationMinutes)
-        </dd>
+    .card_right {
+        border-radius: 2px;
+    }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.movieDetails.Language)
-        </dt>
+    .card_cat {
+        width: 100%;
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-pack: justify;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.movieDetails.Language)
-        </dd>
+    .PG, .year, .genre, .time {
+        color: fff;
+        padding: 10px;
+        font-weight: bold;
+        border-radius: 15px;
+    }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.movieDetails.RleaseDate)
-        </dt>
+    .PG {
+        background: #92FE9D;
+        -webkit-box-shadow: 0 0 50px rgba(0,0,0,0.1);
+        box-shadow: 0 0 50px rgba(0,0,0,0.1);
+        -webkit-transition: 300ms ease-in-out;
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.movieDetails.RleaseDate)
-        </dd>
+    .disc {
+        font-weight: 100;
+        line-height: 27px;
+    }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.movieDetails.Country)
-        </dt>
+    a {
+        color: darkcyan;
+        display: block;
+        text-decoration: none;
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.movieDetails.Country)
-        </dd>
+    .social-btn {
+        margin-left: -10px;
+    }
 
-        <dt>
-            @Html.DisplayNameFor(model => model.movieDetails.genre)
-        </dt>
+    .appoint {
+        color: #fff;
+        border: none;
+        padding: 20px;
+        outline: none;
+        font-size: 12px;
+        margin-top: 30px;
+        margin-left: 10px;
+        background: #92FE9D;
+        border-radius: 12px;
+        -webkit-box-shadow: 0 0 20px rgba(0,0,0,0.2);
+        box-shadow: 0 0 20px rgba(0,0,0,0.2);
+        -webkit-transition: 300ms ease-in-out;
+        -o-transition: 200ms ease-in-out;
+        transition: 200ms ease-in-out;
+    }
 
-        <dd>
-            @Html.DisplayFor(model => model.movieDetails.genre)
-        </dd>
+        .appoint:hover {
+            -webkit-transform: scale(1.1);
+            -ms-transform: scale(1.1);
+            transform: scale(1.1);
+            text-decoration:none;
+            color:white;
+        }
+</style>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.movieDetails.MoviePicture)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.movieDetails.MoviePicture)
-        </dd>
-    </dl>
-
-    @foreach(var show in Model.shows)
-            {
-                @show.Halls.Name
-                @show.startTime
-        <a href="~/User/DetailsShow/@show.ID">BOOk Here</a>
-        <br/>
-            }
-
+<div class="wrapper">
+    <div class="main_card">
+        <div class="card_left">
+            <div class="card_datails">
+                <h1> @Html.DisplayFor(model => model.movieDetails.MovieName)</h1>
+                <div class="card_cat">
+                    <p class="PG"> @Html.DisplayFor(model => model.movieDetails.Language)</p>
+                    <p class="year">@Html.DisplayFor(model => model.movieDetails.RleaseDate)</p>
+                    <p class="genre"> @Html.DisplayFor(model => model.movieDetails.genre) </p>
+                    <p class="genre">@Html.DisplayFor(model => model.movieDetails.Country) </p>
+                    <p class="time">@Html.DisplayFor(model => model.movieDetails.durationMinutes) m</p>
+                </div>
+                <p class="disc">@Html.DisplayFor(model => model.movieDetails.MovieDescription)</p>
+                <div class="social-btn">
+                    <!-- GET-->
+                        @foreach (var show in Model.shows)
+                        {
+ 
+                        <a class="appoint" href="~/User/DetailsShow/@show.ID">
+                            @show.Halls.Name <br/>
+                            @show.startTime
+                            <b >BOOk Here</b>
+                            </a>
+                    
+                        }
+                </div>
+            </div>
+        </div>
+        <div class="card_right">
+            <div class="img_container">
+                <img src="~/Uploads/@Html.DisplayFor(model => model.movieDetails.MoviePicture)" alt="">
+            </div>
+        </div>
+    </div>
 </div>
+
 
 <p>
     @Html.ActionLink("Back to List", "Index")

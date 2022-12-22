@@ -6,6 +6,16 @@
 }
 
 <h2>FrontEndOffice</h2>
+<style>
+    body {
+        background: #00C9FF;
+        background: -webkit-linear-gradient(to right, #92FE9D, #00C9FF);
+        background: -webkit-gradient(linear, left top, right top, from(#92FE9D), to(#00C9FF));
+        background: -webkit-linear-gradient(left, #92FE9D, #00C9FF);
+        background: -o-linear-gradient(left, #92FE9D, #00C9FF);
+        background: linear-gradient(to right, #92FE9D, #00C9FF);
+    }
+</style>
 @using (Html.BeginForm())
 {
     <table class="table">
@@ -14,13 +24,13 @@
                 @Html.DisplayNameFor(model => model.Show.ID)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.seatRow)
+                Seat Number
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.PayWay)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.isReserved)
+                @Html.DisplayNameFor(model => model.Coupon)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.BookingNumber)
@@ -41,11 +51,18 @@
             @Html.DisplayFor(modelItem => item.seatRow)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.PayWay)
+            @if (item.PayWay == "1")
+            {
+                <p> Credit</p>
+            }
+            else
+            {
+                <p> Cash</p>
+            }
         </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.isReserved)
-        </td>
+        <th>
+            @Html.DisplayFor(modelItem => item.Coupon)
+        </th>
         <td>
             @Html.DisplayFor(modelItem => item.BookingNumber)
         </td>
@@ -54,10 +71,10 @@
         </td>
         <td>
             @Html.HiddenFor(modelItem => item.Id)
-            <input type="submit" value="Book" class="btn btn-default" />
+            @Html.ActionLink("Book", "Book", new { id = item.Id })
         </td>
         <td>
-            @Html.ActionLink("Cancel", "CancelSeat",new { id = item.Id})
+            @Html.ActionLink("Cancel", "CancelSeat", new { id = item.Id })
         </td>
     </tr>
 

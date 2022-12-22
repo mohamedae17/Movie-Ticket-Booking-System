@@ -4,113 +4,187 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>DetailsShow</h2>
 @using (Html.BeginForm())
 {
-<div>
-    <h4>MovieDetails</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.show.Halls.Name)
-        </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.show.Halls.Name)
-        </dd>
-        <dt>
-            @Html.DisplayNameFor(model => model.show.movieDetails.MovieName)
-        </dt>
+<style>
 
-        <dd>
-            @Html.DisplayFor(model => model.show.movieDetails.MovieName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.show.movieDetails.MovieDescription)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.show.movieDetails.MovieDescription)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.show.movieDetails.durationMinutes)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.show.movieDetails.durationMinutes)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.show.movieDetails.Language)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.show.movieDetails.Language)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.show.movieDetails.RleaseDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.show.movieDetails.RleaseDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.show.movieDetails.Country)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.show.movieDetails.Country)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.show.movieDetails.genre)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.show.movieDetails.genre)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.show.movieDetails.MoviePicture)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.show.movieDetails.MoviePicture)
-        </dd>
-
-    </dl>
-    @Html.HiddenFor(x => Model.show.movieDetails.Language)
-    @Html.HiddenFor(x => Model.show.movieDetails.MovieName)
-    @Html.HiddenFor(x => Model.number)
-
-    @for (int i = 0; i < Model.showSeatofMovie.Count; i++)
-    {
-        @Html.HiddenFor(m => Model.showSeatofMovie[i].Id)
-        @Html.HiddenFor(m => Model.showSeatofMovie[i].seatRow)
-        @Html.HiddenFor(m => Model.showSeatofMovie[i].ShowId)
-        @Html.HiddenFor(m => Model.showSeatofMovie[i].BookingNumber)
-        if (Model.showSeatofMovie[i].isReserved == false)
-        {
-
-            @Html.EditorFor(model => Model.showSeatofMovie[i].isReserved);
+        .main_card {
+            color: #fff;
+            width: 760px;
+            margin: 50px auto;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            max-width: 770px;
+            background: #00C9FF;
+            background: -webkit-linear-gradient(to right, #92FE9D, #00C9FF);
+            background: -webkit-gradient(linear, left top, right top, from(#92FE9D), to(#00C9FF));
+            background: -webkit-linear-gradient(left, #92FE9D, #00C9FF);
+            background: -o-linear-gradient(left, #92FE9D, #00C9FF);
+            background: linear-gradient(to right, #92FE9D, #00C9FF);
+            -webkit-box-shadow: 0 0 40px rgba(0,0,0,0.3);
+            box-shadow: 0 0 40px rgba(0,0,0,0.3);
         }
-        else
-        {
-            @Html.EditorFor(model => Model.showSeatofMovie[i].isReserved, new { htmlAttributes = new { @disabled = "disabled" } })
+
+        .card_left {
+            width: 90%;
         }
+
+        .card_datails {
+            width: 90%;
+            padding: 30px;
+            margin-top: -25px;
+        }
+
+            .card_datails h1 {
+                font-size: 30px;
+            }
+
+        .card_right img {
+            height: 390px;
+            border-radius: 2px;
+        }
+
+        .card_right {
+            border-radius: 2px;
+        }
+
+        .card_cat {
+            width: 100%;
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-box-pack: justify;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+        }
+
+        .PG, .year, .genre, .time {
+            color: fff;
+            padding: 10px;
+            font-weight: bold;
+            border-radius: 15px;
+        }
+
+        .PG {
+            background: #92FE9D;
+            -webkit-box-shadow: 0 0 50px rgba(0,0,0,0.1);
+            box-shadow: 0 0 50px rgba(0,0,0,0.1);
+            -webkit-transition: 300ms ease-in-out;
+        }
+
+        .disc {
+            font-weight: 100;
+            line-height: 27px;
+        }
+
+        a {
+            color: darkcyan;
+            display: block;
+            text-decoration: none;
+        }
+
+        .social-btn {
+            margin-left: -10px;
+        }
+
+        .appoint {
+            color: #fff;
+            border: none;
+            padding: 20px;
+            outline: none;
+            font-size: 12px;
+            margin-top: 30px;
+            margin-left: 10px;
+            background: #92FE9D;
+            border-radius: 12px;
+            -webkit-box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            -webkit-transition: 300ms ease-in-out;
+            -o-transition: 200ms ease-in-out;
+            transition: 200ms ease-in-out;
+        }
+
+            .appoint:hover {
+                -webkit-transform: scale(1.1);
+                -ms-transform: scale(1.1);
+                transform: scale(1.1);
+                text-decoration: none;
+                color: white;
+            }
+
+          
+        .squaredTwo {
+            width: 28px;
+            height: 28px;
+            position: relative;
+            margin: 20px auto;
+            background: #fcfff4;
+            background: linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+            box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
+        }
+    input[type="radio"], input[type="checkbox"] {
+        margin:20px;
     }
-
-    @Html.RadioButton("option", "1") <text>Credit</text>
-    @Html.RadioButton("option", "2") <text> Cash </text>
-    @Html.TextBox("Coupon");
-    <input type="submit" name="submit" value="Book" />
-
-    <p>@ViewBag.Message</p>
-</div>
+        
+</style>
 
 
+    <div class="wrapper">
+        <h1 style="color:aquamarine">@Html.DisplayFor(model => model.show.Halls.Name)</h1>
+        <div class="main_card">
+            <div class="card_left">
+                <div class="card_datails">
+                    <h1> @Html.DisplayFor(model => model.show.movieDetails.MovieName)</h1>
+                    <div class="card_cat">
+                        <p class="PG"> @Html.DisplayFor(model => model.show.movieDetails.Language)</p>
+                        <p class="year">@Html.DisplayFor(model => model.show.movieDetails.RleaseDate)</p>
+                        <p class="genre"> @Html.DisplayFor(model => model.show.movieDetails.genre) </p>
+                        <p class="genre">@Html.DisplayFor(model => model.show.movieDetails.Country) </p>
+                        <p class="time">@Html.DisplayFor(model => model.show.movieDetails.durationMinutes) m</p>
+                    </div>
+                    <p class="disc">@Html.DisplayFor(model => model.show.movieDetails.MovieDescription)</p>
+                    <div class="social-btn">
+                        <!-- GET-->
+                        @Html.HiddenFor(x => Model.show.movieDetails.Language)
+                        @Html.HiddenFor(x => Model.show.movieDetails.MovieName)
+                        @Html.HiddenFor(x => Model.number)
+
+                        @for (int i = 0; i < Model.showSeatofMovie.Count; i++)
+                        {
+                            @Html.HiddenFor(m => Model.showSeatofMovie[i].Id)
+                            @Html.HiddenFor(m => Model.showSeatofMovie[i].seatRow)
+                            @Html.HiddenFor(m => Model.showSeatofMovie[i].ShowId)
+                            @Html.HiddenFor(m => Model.showSeatofMovie[i].BookingNumber)
+                            if (Model.showSeatofMovie[i].isReserved == false)
+                            {
+
+                                @Html.EditorFor(model => Model.showSeatofMovie[i].isReserved, new { htmlAttributes = new { @class = "squaredTwo" } })
+                            }
+                            else
+                            {
+                                @Html.EditorFor(model => Model.showSeatofMovie[i].isReserved, new { htmlAttributes = new { @class = "squaredTwo" ,@disabled = "disabled" } })
+                            }
+                        }
+                        <br />
+
+                        @Html.RadioButton("option", "1") <text>Credit</text>
+                        @Html.RadioButton("option", "2") <text> Cash </text>
+                        <br />
+
+                        @Html.TextBox("Coupon", null, new { @class = "form-control", placeholder = "Coupon for discount" })
+                        <br />
+
+                        <input type="submit" name="submit" class="appoint" value="Book" />
+                    </div>
+                </div>
+            </div>
+            <div class="card_right">
+                <div class="img_container">
+                    <img src="~/Uploads/@Html.DisplayFor(model => model.show.movieDetails.MoviePicture)" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
 }

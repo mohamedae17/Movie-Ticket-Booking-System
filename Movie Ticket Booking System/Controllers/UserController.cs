@@ -35,10 +35,8 @@ namespace Movie_Ticket_Booking_System.Controllers
                 var item = new CinemasInCities();
                 item.city = "Searh Result";
                 item.cinema = null;
-                //item.cinema = _context.Cinemas.Where(x => x.CinemaName.StartsWith(search) || search == null).ToList();
                 item.movieDetails = _context.MovieDetails.Where(x => x.MovieName.StartsWith(search) || search == null).ToList();
                 list.Add(item);
-                //Index action method will return a view with a student records based on what a user specify the value in textbox  
                 return View(list);
             }
             else if (option == "Genere")
@@ -46,10 +44,8 @@ namespace Movie_Ticket_Booking_System.Controllers
                 var item = new CinemasInCities();
                 item.city = "Searh Result";
                 item.cinema = null;
-                //item.cinema = _context.Cinemas.Where(x => x.CinemaName.StartsWith(search) || search == null).ToList();
                 item.movieDetails = _context.MovieDetails.Where(x => x.genre.StartsWith(search) || search == null).ToList();
                 list.Add(item);
-                //Index action method will return a view with a student records based on what a user specify the value in textbox  
                 return View(list);
             }
             else if (option == "Language")
@@ -57,10 +53,8 @@ namespace Movie_Ticket_Booking_System.Controllers
                 var item = new CinemasInCities();
                 item.city = "Searh Result";
                 item.cinema = null;
-                //item.cinema = _context.Cinemas.Where(x => x.CinemaName.StartsWith(search) || search == null).ToList();
                 item.movieDetails = _context.MovieDetails.Where(x => x.Language.StartsWith(search) || search == null).ToList();
                 list.Add(item);
-                //Index action method will return a view with a student records based on what a user specify the value in textbox  
                 return View(list);
             }
             else if (option == "ReleaseDate")
@@ -68,10 +62,8 @@ namespace Movie_Ticket_Booking_System.Controllers
                 var item = new CinemasInCities();
                 item.city = "Searh Result";
                 item.cinema = null;
-                //item.cinema = _context.Cinemas.Where(x => x.CinemaName.StartsWith(search) || search == null).ToList();
                 item.movieDetails = _context.MovieDetails.Where(x => x.RleaseDate.StartsWith(search) || search == null).ToList();
                 list.Add(item);
-                //Index action method will return a view with a student records based on what a user specify the value in textbox  
                 return View(list);
             }
             else if (option == "CityName")
@@ -80,7 +72,6 @@ namespace Movie_Ticket_Booking_System.Controllers
                 List<Cinema> Cin = new List<Cinema>();
                 int K = _context.cities.Where(x => x.Name.StartsWith(search) || search == null).Single().Id;
                 Cin = _context.Cinemas.Where(x => x.CityId == K || search == null).ToList();
-                //item.cinema = _context.Cinemas.Where(x => x.CinemaName.StartsWith(search) || search == null).ToList();
                 foreach (var cinema in Cin)
                 {
                     var item = new CinemasInCities();
@@ -103,14 +94,11 @@ namespace Movie_Ticket_Booking_System.Controllers
                     item.movieDetails = Movies;
                     list.Add(item);
                 }
-                //list.Add(item);
-                //Index action method will return a view with a student records based on what a user specify the value in textbox  
                 return View(list);
             }
             else
             {
                 List<City> cities = _context.cities.ToList();
-               // List<Cinema> cinemas = _context.Cinemas.ToList();
                 foreach(var city in cities)
                 {
                     var Cinemas = _context.Cinemas.Where(c => c.CityId == city.Id).ToList();
@@ -122,7 +110,7 @@ namespace Movie_Ticket_Booking_System.Controllers
                              Cin.Add(CinemaList);
                     }
                     //item.cinema = Cin;
-                    int i = 0;
+                   // int i = 0;
                     foreach (var cinema in Cin)
                     {
                         var item = new CinemasInCities();
@@ -134,8 +122,11 @@ namespace Movie_Ticket_Booking_System.Controllers
                         List<Show> shows = new List<Show>();
                         foreach (var Hall in Halls)
                         {
-                            var ShowList = _context.Shows.Where(s => s.HallId == Hall.Id).DefaultIfEmpty().Single();
-                            shows.Add(ShowList);
+                            var ShowList = _context.Shows.Where(s => s.HallId == Hall.Id).ToList();
+                            foreach(var s in ShowList)
+                            {
+                            shows.Add(s);
+                            }
                         }
                         foreach (var show in shows)
                         {
@@ -147,8 +138,6 @@ namespace Movie_Ticket_Booking_System.Controllers
                         }
                         item.movieDetails=Movies;
                         list.Add(item);
-                        // i++;
-                        //item.MovieDetails = Movies;
                     }
                     
                 }
@@ -175,13 +164,6 @@ namespace Movie_Ticket_Booking_System.Controllers
 
             return View(movieWithShows);
         }
-
-        public ActionResult CheckBookSeat()
-        {
-            var getBookTable = _context.ShowSeat.ToList();
-            return View(getBookTable);
-
-        }
        
         [HttpGet]
         public ActionResult DetailsShow(int? id)
@@ -197,8 +179,6 @@ namespace Movie_Ticket_Booking_System.Controllers
             }
             BookNowView bookNow = new BookNowView();
             bookNow.show = _context.Shows.Find(id);
-            //int x = show.Halls.totalSeats - _context.ShowSeat.Where(a => a.isReserved == true && a.ShowId == show.ID).Count();
-            //bookNow.chairs = x;
             bookNow.number = _context.ShowSeat.Where(a => a.ShowId == show.ID).ToList().Count;
             if (bookNow.showSeatofMovie == null)
             {
@@ -209,7 +189,6 @@ namespace Movie_Ticket_Booking_System.Controllers
                 ShowSeat g = _context.ShowSeat.Where(s => s.ShowId == show.ID && s.seatRow == i).DefaultIfEmpty().Single();
                 bookNow.showSeatofMovie.Add(g);
             }
-          //  bookNow.showSeatofMovie = null;
             return View(bookNow);
         }
         [HttpPost]
@@ -228,12 +207,13 @@ namespace Movie_Ticket_Booking_System.Controllers
                         PayWay = option,
                         ShowId = item.ShowId,
                         Coupon = Coupon,
+                        createdOn = DateTime.Now,
                         BookingNumber = item.BookingNumber
-                    });
+                    }) ;
                     _context.SaveChanges();
                 }
             }
-            return View(bookNow);
+            return Content("Check Your Mail");
         
         }
         

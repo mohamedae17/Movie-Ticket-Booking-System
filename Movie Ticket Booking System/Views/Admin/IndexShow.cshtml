@@ -8,7 +8,7 @@
 <h2>IndexShow</h2>
 
 <p>
-    @Html.ActionLink("Create New", "CreateShow")
+    @Html.ActionLink("Create New Show in Cinema", "IndexCinema")
 </p>
 <table class="table">
     <tr>
@@ -49,7 +49,6 @@
         </td>
         <td>
             @Html.ActionLink("Edit", "EditShow", new { id=item.ID }) |
-            @Html.ActionLink("Details", "DetailsShow", new { id=item.ID }) |
             @Html.ActionLink("Delete", "DeleteShow", new { id=item.ID })
         </td>
     </tr>
