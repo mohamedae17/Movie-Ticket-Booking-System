@@ -174,6 +174,10 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RolesController.cs" />
     <Compile Include="Controllers\UserController.cs" />
+    <Compile Include="Counters - Singelton\Counter.cs" />
+    <Compile Include="Coupon - Proxy\EmailServiceProxy.cs" />
+    <Compile Include="Coupon - Proxy\SendEmail.cs" />
+    <Compile Include="Coupon - Proxy\SendEmailService.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -249,12 +253,14 @@
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Models\Show.cs" />
     <Compile Include="Models\ShowSeat.cs" />
-    <Compile Include="Payments\BankFactory.cs" />
-    <Compile Include="Payments\Cash.cs" />
-    <Compile Include="Payments\Credit.cs" />
-    <Compile Include="Payments\IBank.cs" />
-    <Compile Include="Payments\IBankFactory.cs" />
+    <Compile Include="Payments - Factory\BankFactory.cs" />
+    <Compile Include="Payments - Factory\Cash.cs" />
+    <Compile Include="Payments - Factory\Credit.cs" />
+    <Compile Include="Payments - Factory\IBank.cs" />
+    <Compile Include="Payments - Factory\IBankFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SeatsStatueCopy - ProtoType\ReSeat.cs" />
+    <Compile Include="SeatsStatueCopy - ProtoType\Seat.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\BookNowView.cs" />
     <Compile Include="ViewModels\CinemasInCities.cs" />

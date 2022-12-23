@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Data.Entity;
 using System.Net;
 using System.IO;
+using Movie_Ticket_Booking_System.Counters;
 
 namespace Movie_Ticket_Booking_System.Controllers
 {
@@ -102,12 +103,14 @@ namespace Movie_Ticket_Booking_System.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateMovies( MovieDetails movieDetails,HttpPostedFileBase Uploads)
         {
+            Counter MoviesCount = Counter.GetCounter();
             if (ModelState.IsValid)
             {
                 string path = Path.Combine(Server.MapPath("~/Uploads"),Uploads.FileName);
                 Uploads.SaveAs(path);
                 movieDetails.MoviePicture = Uploads.FileName;
                 _context.MovieDetails.Add(movieDetails);
+                MoviesCount.AddOne();
                 _context.SaveChanges();
                 return RedirectToAction("IndexMovies");
             }
@@ -160,8 +163,10 @@ namespace Movie_Ticket_Booking_System.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(int id)
         {
+            Counter MovieCounter = Counter.GetCounter();
             MovieDetails movieDetails = _context.MovieDetails.Find(id);
             _context.MovieDetails.Remove(movieDetails);
+            MovieCounter.SubOne();
             _context.SaveChanges();
             return RedirectToAction("IndexMovies");
         }

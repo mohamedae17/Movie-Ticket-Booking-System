@@ -7,7 +7,6 @@ namespace Movie_Ticket_Booking_System.Payments
 {
     public interface IBank
     {
-        void withDraw(string Coupon);
         void withDraw();
     }
 }

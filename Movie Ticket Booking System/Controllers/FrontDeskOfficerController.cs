@@ -1,4 +1,5 @@
-﻿using Movie_Ticket_Booking_System.Models;
+﻿using Movie_Ticket_Booking_System.Coupon___Proxy;
+using Movie_Ticket_Booking_System.Models;
 using Movie_Ticket_Booking_System.Payments;
 using System;
 using System.Collections.Generic;
@@ -36,12 +37,11 @@ namespace Movie_Ticket_Booking_System.Controllers
                 IBank bank = bankFactory.GetBank(frontEnd.PayWay);
                 if (frontEnd.Coupon != null)
                 {
-                    bank.withDraw(frontEnd.Coupon);
-                }
-                else
-                {
-             //       bank.withDraw();
-                }
+                    EmailServiceProxy proxy = new EmailServiceProxy();
+                    proxy.Coubon(frontEnd.Coupon);
+                }  
+                bank.withDraw();
+               
             }
             else
             {

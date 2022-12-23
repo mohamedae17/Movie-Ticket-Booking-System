@@ -10,6 +10,7 @@ using System.Net;
 using System.Net.Mail;
 using Movie_Ticket_Booking_System.Payments;
 using Microsoft.AspNet.Identity;
+using Movie_Ticket_Booking_System.SeatsStatueCopy___ProtoType;
 
 namespace Movie_Ticket_Booking_System.Controllers
 {
@@ -206,6 +207,19 @@ namespace Movie_Ticket_Booking_System.Controllers
 
             foreach (var item in bookNow.showSeatofMovie)
             {
+                Seat seat = new ReSeat
+                {
+                    Id = item.Id,
+                    isReserved = item.isReserved,
+                    seatRow = item.seatRow,
+                    UserId = User.Identity.GetUserId(),
+                    PayWay = option,
+                    ShowId = item.ShowId,
+                    Coupon = Coupon,
+                    createdOn = DateTime.Now,
+                    BookingNumber = item.BookingNumber
+                };
+                Seat seatCopy = seat.ShallowCopy(); 
                 if (item.isReserved && item.BookingNumber == null)
                 {
                     _context.frontEndOfficers.Add(new FrontEndOfficer()
@@ -227,6 +241,5 @@ namespace Movie_Ticket_Booking_System.Controllers
         
         }
         
-
     }
 }
