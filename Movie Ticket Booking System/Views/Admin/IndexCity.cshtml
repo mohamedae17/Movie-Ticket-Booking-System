@@ -5,10 +5,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Index</h2>
+<h2>Cities</h2>
 
 <p>
-    @Html.ActionLink("Create New", "CreateCity")
+    @Html.ActionLink("Create New City", "CreateCity") <br/>
+    @Html.ActionLink("Create New Movie", "CreateMovies") <br />
+    @Html.ActionLink("Cinemas", "IndexCinema") <br />
+    @Html.ActionLink("Shows", "IndexShow")
 </p>
 <table class="table">
     <tr>

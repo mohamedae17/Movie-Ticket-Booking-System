@@ -237,8 +237,8 @@ namespace Movie_Ticket_Booking_System.Controllers
                     _context.SaveChanges();
                 }
             }
-            return Content("Check Your Mail");
-        
+            return Content("<script language='javascript' type='text/javascript'>alert('Check your Mail');</script>");
+
         }
         
     }

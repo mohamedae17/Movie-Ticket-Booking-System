@@ -8,6 +8,7 @@ using System.Data.Entity;
 using System.Net;
 using System.IO;
 using Movie_Ticket_Booking_System.Counters;
+using System.Net.Mail;
 
 namespace Movie_Ticket_Booking_System.Controllers
 {
@@ -112,6 +113,22 @@ namespace Movie_Ticket_Booking_System.Controllers
                 _context.MovieDetails.Add(movieDetails);
                 MoviesCount.AddOne();
                 _context.SaveChanges();
+                //System:
+                using (MailMessage mail = new MailMessage())
+                {
+                    mail.From = new MailAddress("mohamed.ae1717@gmail.com");
+                    mail.To.Add("titopop2001@gmail.com");
+                    mail.Subject = "New Movie !!";
+                    mail.Body = "<h1>New Movie Added</h1>";
+                    mail.IsBodyHtml = true;
+                    using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                    {
+                        smtp.UseDefaultCredentials = false;
+                        smtp.Credentials = new System.Net.NetworkCredential("mohamed.ae1717@gmail.com", ",,,,,,,");
+                        smtp.EnableSsl = true;
+                        smtp.Send(mail);
+                    }
+                }
                 return RedirectToAction("IndexMovies");
             }
 

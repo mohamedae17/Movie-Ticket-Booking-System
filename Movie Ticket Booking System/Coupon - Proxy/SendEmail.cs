@@ -20,10 +20,9 @@ namespace Movie_Ticket_Booking_System.Coupon___Proxy
                 using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
                 {
                     smtp.UseDefaultCredentials = false;
-                    smtp.Credentials = new System.Net.NetworkCredential("mohamed.ae1717@gmail.com", ",,,,,,,,,");
+                    smtp.Credentials = new System.Net.NetworkCredential("mohamed.ae1717@gmail.com", ",,,,,,,,,,,");
                     smtp.EnableSsl = true;
-                    //smtp.Send(mail);
-                    //lab
+                    smtp.Send(mail);
                 }
             }
         }
@@ -40,10 +39,9 @@ namespace Movie_Ticket_Booking_System.Coupon___Proxy
                 using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
                 {
                     smtp.UseDefaultCredentials = false;
-                    smtp.Credentials = new System.Net.NetworkCredential("mohamed.ae1717@gmail.com", ",,,,,,,,,");
+                    smtp.Credentials = new System.Net.NetworkCredential("mohamed.ae1717@gmail.com", ",,,,,,,,,,,,,,,,");
                     smtp.EnableSsl = true;
-                    //smtp.Send(mail);
-                    //lab
+                    smtp.Send(mail);
                 }
             }
         }

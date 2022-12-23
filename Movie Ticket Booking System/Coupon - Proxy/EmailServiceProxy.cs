@@ -5,20 +5,31 @@ using System.Web;
 
 namespace Movie_Ticket_Booking_System.Coupon___Proxy
 {
-    public class EmailServiceProxy
+    public class EmailServiceProxy : SendEmailService
     {
         private SendEmailService emailService;
         public void Coubon(string Coupon)
         {
-            if(emailService == null) { emailService = new SendEmail(); }
             if (Coupon == "44")
             {
-              emailService.withDraw();
+              withDraw();
             }
             else
             {
-                emailService.NotDiscount();
+                NotDiscount();
             }
+        }
+
+        public override void NotDiscount()
+        {
+            if (emailService == null) { emailService = new SendEmail(); }
+            emailService.NotDiscount();
+        }
+
+        public override void withDraw()
+        {
+            if (emailService == null) { emailService = new SendEmail(); }
+            emailService.withDraw();
         }
     }
 }

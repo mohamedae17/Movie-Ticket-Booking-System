@@ -20,9 +20,9 @@ namespace Movie_Ticket_Booking_System.Payments
                 using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
                 {
                     smtp.UseDefaultCredentials = false;
-                    //smtp.Credentials = new System.Net.NetworkCredential("mohamed.ae1717@gmail.com", ",,,,,,,,,");
+                    smtp.Credentials = new System.Net.NetworkCredential("mohamed.ae1717@gmail.com", "bjbccumsxqyuhjov");
                     smtp.EnableSsl = true;
-                    //smtp.Send(mail);
+                    smtp.Send(mail);
                 }
             }
         }

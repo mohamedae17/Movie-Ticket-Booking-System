@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net.Mail;
 using System.Web;
 using System.Web.Mvc;
 
@@ -56,6 +57,22 @@ namespace Movie_Ticket_Booking_System.Controllers
         {
             _context.frontEndOfficers.Remove(_context.frontEndOfficers.Find(id));
             _context.SaveChanges();
+            //System:
+            using (MailMessage mail = new MailMessage())
+            {
+                mail.From = new MailAddress("mohamed.ae1717@gmail.com");
+                mail.To.Add("titopop2001@gmail.com");
+                mail.Subject = "Your Booked is Canelld";
+                mail.Body = "<h1>Your Booked is Canelld & refunded the payment</h1>";
+                mail.IsBodyHtml = true;
+                using (SmtpClient smtp = new SmtpClient("smtp.gmail.com", 587))
+                {
+                    smtp.UseDefaultCredentials = false;
+                    smtp.Credentials = new System.Net.NetworkCredential("mohamed.ae1717@gmail.com", ",,,,,,,,,");
+                    smtp.EnableSsl = true;
+                    smtp.Send(mail);
+                }
+            }
             return RedirectToAction("Index");
         }
     }
